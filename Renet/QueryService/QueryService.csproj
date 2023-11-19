@@ -6,4 +6,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\IRepositories\IRepositories.csproj" />
+    <ProjectReference Include="..\QueryModel\QueryModel.csproj" />
+  </ItemGroup>
+
 </Project>
