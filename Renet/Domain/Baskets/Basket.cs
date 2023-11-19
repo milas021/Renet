@@ -12,5 +12,6 @@ namespace Domain.Baskets
         public double TotalPrice { get; set; }
         public double FinalPrice { get; set; }
         public Guid UserId { get; set; }
+        public IEnumerable<BasketItem> Items { get; set; }
     }
 }

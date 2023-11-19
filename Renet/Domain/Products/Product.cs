@@ -15,6 +15,7 @@ namespace Domain.Products
         public double Price { get; set; }
         public string Guaranty { get; set; }
         public string Description { get; set; }
+        public Category Category { get; set; }
         public IEnumerable<Article> Articles { get; set; }
         public IEnumerable<ProductPicture> Pictures { get; set; }
         public IEnumerable<Feature> Features { get; set; }
