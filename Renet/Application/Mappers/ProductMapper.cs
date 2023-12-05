@@ -17,7 +17,7 @@ namespace Application.Mappers
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
-                Picture = product.Pictures== null ?null :product.Pictures.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
+                Picture = product.Pictures.ToList().Count== 0 ?null :product.Pictures.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
             };
             return dto;
         }
