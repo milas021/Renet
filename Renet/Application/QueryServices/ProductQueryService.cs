@@ -18,11 +18,22 @@ namespace Application.QueryServices
             _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<ProductItemDto>> GetAllProduct(int page, int pageSize)
+        public async Task<IEnumerable<SimpleProductDto>> GetAllProduct(int page, int pageSize)
         {
-            var result = await _productRepository.GetAllProduct(page, pageSize);
-            var dtos = result.Select(x => x.ToDto());
+            var result = await _productRepository.GetAllSimpleProduct(page, pageSize);
+            var dtos = result.Select(x => x.ToSimpleDto());
             return dtos;
         }
+
+        public async Task<ProductDto> GetProduct(Guid productId)
+        {
+            var result = await _productRepository.GetById(productId);
+            var dto = result.ToDto();
+            return dto;
+        }
+
+
+
+        
     }
 }

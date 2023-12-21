@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Application.Dtos
 {
-    public class ProductItemDto
+    public class FeatureDto
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public double Price { get; set; }
-        public string Picture { get; set; }
-
+        public string Value { get; set; }
     }
 }

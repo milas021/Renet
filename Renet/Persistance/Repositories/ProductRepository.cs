@@ -1,4 +1,5 @@
-﻿using Application.IRepositories;
+﻿using Application.Dtos;
+using Application.IRepositories;
 using Domain.Products;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
@@ -17,11 +18,22 @@ namespace Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetAllProduct(int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize)
         {
             var skip = (page - 1) * pageSize;
             var result =await _context.Products.Include(x=>x.Pictures).Skip(skip).Take(pageSize).ToListAsync();
             return result;
+        }
+
+        public async Task<Product> GetById(Guid id)
+        {
+            var result = await _context.Products.Include(x => x.Category)
+                .Include(x => x.Articles)
+                .Include(x => x.Pictures)
+                .Include(x => x.Features)
+                .SingleOrDefaultAsync(x => x.Id == id);
+
+                return result;
         }
     }
 

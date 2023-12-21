@@ -20,5 +20,12 @@ namespace Renet.Controllers
             var result =await productQueryService.GetAllProduct(page, pageSize);
             return Ok(result);
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetProduct(Guid id)
+        {
+            var result = await productQueryService.GetProduct(id);
+            return Ok(result);
+        }
     }
 }

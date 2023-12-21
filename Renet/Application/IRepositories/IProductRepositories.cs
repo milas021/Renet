@@ -1,4 +1,5 @@
-﻿using Domain.Products;
+﻿using Application.Dtos;
+using Domain.Products;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,7 @@ namespace Application.IRepositories
 {
     public interface IProductRepositories
     {
-        Task<IEnumerable<Product>> GetAllProduct(int page, int pageSize);
+        Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize);
+        Task<Product> GetById(Guid id);
     }
 }
