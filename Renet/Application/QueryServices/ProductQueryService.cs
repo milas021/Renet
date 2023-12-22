@@ -12,15 +12,17 @@ namespace Application.QueryServices
     public class ProductQueryService
     {
         private readonly IProductRepositories _productRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
-        public ProductQueryService(IProductRepositories productRepository)
+        public ProductQueryService(IProductRepositories productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
+            _categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<SimpleProductDto>> GetAllProduct(int page, int pageSize)
+        public async Task<IEnumerable<SimpleProductDto>> GetAllProduct(int page, int pageSize , Guid categoryId)
         {
-            var result = await _productRepository.GetAllSimpleProduct(page, pageSize);
+            var result = await _productRepository.GetAllSimpleProduct(page, pageSize ,categoryId);
             var dtos = result.Select(x => x.ToSimpleDto());
             return dtos;
         }
@@ -32,8 +34,15 @@ namespace Application.QueryServices
             return dto;
         }
 
+        public async Task<IEnumerable<CategoryDto>> GetAllCategories()
+        {
+            var result = await _categoryRepository.GetAll();
+            var dto = result.Select(x => x.ToDto());
+            return dto;
+        }
 
 
-        
+
+
     }
 }

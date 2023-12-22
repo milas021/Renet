@@ -10,7 +10,7 @@ namespace Application.IRepositories
 {
     public interface IProductRepositories
     {
-        Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize);
+        Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize,Guid categoryId);
         Task<Product> GetById(Guid id);
     }
 }

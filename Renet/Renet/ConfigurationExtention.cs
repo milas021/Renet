@@ -28,6 +28,7 @@ namespace Renet
         private static void ConfigureRepositories(this WebApplicationBuilder builder) 
         {
             builder.Services.AddScoped<IProductRepositories ,ProductRepository>();
+            builder.Services.AddScoped<ICategoryRepository , CategoryRepository>();
         }
 
     }

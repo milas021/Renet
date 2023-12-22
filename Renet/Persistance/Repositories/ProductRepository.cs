@@ -18,11 +18,28 @@ namespace Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize, Guid categoryId)
         {
             var skip = (page - 1) * pageSize;
-            var result =await _context.Products.Include(x=>x.Pictures).Skip(skip).Take(pageSize).ToListAsync();
-            return result;
+            if (categoryId != Guid.Empty)
+            {
+                var query = await _context.Products.Include(x => x.Pictures).Include(x => x.Category)
+                       .Where(x => x.Category.Id == categoryId)
+                       .Skip(skip).Take(pageSize)
+                       .ToListAsync();
+
+                return query;
+            }
+            else
+            {
+                var query = await _context.Products.Include(x => x.Pictures)
+
+                      .Skip(skip).Take(pageSize)
+                      .ToListAsync();
+                return query;
+
+            }
+
         }
 
         public async Task<Product> GetById(Guid id)
@@ -33,7 +50,7 @@ namespace Persistance.Repositories
                 .Include(x => x.Features)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
-                return result;
+            return result;
         }
     }
 
