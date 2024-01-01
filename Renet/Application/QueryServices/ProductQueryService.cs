@@ -20,14 +20,14 @@ namespace Application.QueryServices
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(int page, int pageSize , Guid categoryId)
+        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, int page, int pageSize)
         {
-            var products = await _productRepository.GetAllSimpleProduct(page, pageSize ,categoryId);
+            var products = await _productRepository.GetAllSimpleProduct(name, categoryId, minPrice, maxPrice, page, pageSize);
             var dtos = products.Select(x => x.ToSimpleDto());
             var result = new PaginationDto<SimpleProductDto>()
             {
                 Results = dtos,
-                TotalRecord = await _productRepository.GetAllSimpleProductCount(categoryId)
+                TotalRecord = await _productRepository.GetAllSimpleProductCount(name ,categoryId ,minPrice ,maxPrice)
             };
             return result;
         }

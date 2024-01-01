@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace Persistance.Repositories
 {
@@ -18,49 +19,59 @@ namespace Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(int page, int pageSize, Guid categoryId)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, int page, int pageSize)
         {
-            var skip = (page - 1) * pageSize;
+            //todo : test this method
+
+            var query = _context.Products
+                .Include(x => x.Pictures)
+                .Include(x => x.Category)
+                .AsQueryable();
+
             if (categoryId != Guid.Empty)
-            {
-                var query = await _context.Products.Include(x => x.Pictures).Include(x => x.Category)
-                       .Where(x => x.Category.Id == categoryId)
-                       .Skip(skip).Take(pageSize)
-                       .ToListAsync();
+                query = query.Where(x => x.Category.Id == categoryId);
 
-                return query;
-            }
-            else
-            {
-                var query = await _context.Products.Include(x => x.Pictures)
-                      .Skip(skip).Take(pageSize)
-                      .ToListAsync();
-                return query;
+            if(!string.IsNullOrEmpty(name))
+                query = query.Where(x=>x.Name.Contains(name));
 
-            }
+            if (minPrice != null)
+                query = query.Where(x=>x.Price >= minPrice);
+
+            if (maxPrice != null)
+                query = query.Where(x => x.Price <= maxPrice);
+
+            var skip = (page - 1) * pageSize;
+            var result = query.Skip(skip).Take(pageSize).ToList();
+            return result;
 
         }
 
-        public async Task<int> GetAllSimpleProductCount(Guid categoryId)
+        public async Task<int> GetAllSimpleProductCount(string name, Guid categoryId, double? minPrice, double? maxPrice)
         {
+
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(x => x.Name.Contains(name));
+
             if (categoryId != Guid.Empty)
-            {
-                var count = await _context.Products
-                    .Where(x => x.Category.Id == categoryId)
-                    .CountAsync();
-                return count;
-            }
-            else
-            {
-                var count = await _context.Products
-                   .CountAsync();
-                return count;
-            }
+                query = query.Where(x => x.Category.Id == categoryId);
+
+            if (minPrice != null)
+                query = query.Where(x => x.Price >= minPrice);
+
+            if (maxPrice != null)
+                query = query.Where(x => x.Price <= maxPrice);
+
+            var result =await query.CountAsync();
+            return result;
+            
         }
 
         public async Task<Product> GetById(Guid id)
         {
-            var result = await _context.Products.Include(x => x.Category)
+            var result = await _context.Products
+                .Include(x => x.Category)
                 .Include(x => x.Articles)
                 .Include(x => x.Pictures)
                 .Include(x => x.Features)
@@ -68,6 +79,8 @@ namespace Persistance.Repositories
 
             return result;
         }
+
+        
     }
 
 }

@@ -15,9 +15,9 @@ namespace Renet.Controllers
         }
 
         [HttpGet()]
-        public async Task <IActionResult> GetAllProduct(int page , int pageSize , Guid categoryId)
+        public async Task<IActionResult> GetAllProduct(string? name, Guid categoryId, double? minPrice, double? maxPrice, int page, int pageSize)
         {
-            var result =await productQueryService.GetAllProduct(page, pageSize ,categoryId);
+            var result = await productQueryService.GetAllProduct(name, categoryId, minPrice, maxPrice, page, pageSize);
             return Ok(result);
         }
 
