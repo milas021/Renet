@@ -14,4 +14,11 @@ namespace Application.Dtos
         public string Picture { get; set; }
 
     }
+
+    public class PaginationDto<T>
+    {
+        public IEnumerable<T> Results { get; set; }
+        public int TotalRecord { get; set; }
+    }
+
 }

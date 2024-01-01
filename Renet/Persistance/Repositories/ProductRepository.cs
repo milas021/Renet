@@ -33,13 +33,29 @@ namespace Persistance.Repositories
             else
             {
                 var query = await _context.Products.Include(x => x.Pictures)
-
                       .Skip(skip).Take(pageSize)
                       .ToListAsync();
                 return query;
 
             }
 
+        }
+
+        public async Task<int> GetAllSimpleProductCount(Guid categoryId)
+        {
+            if (categoryId != Guid.Empty)
+            {
+                var count = await _context.Products
+                    .Where(x => x.Category.Id == categoryId)
+                    .CountAsync();
+                return count;
+            }
+            else
+            {
+                var count = await _context.Products
+                   .CountAsync();
+                return count;
+            }
         }
 
         public async Task<Product> GetById(Guid id)

@@ -20,11 +20,16 @@ namespace Application.QueryServices
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<IEnumerable<SimpleProductDto>> GetAllProduct(int page, int pageSize , Guid categoryId)
+        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(int page, int pageSize , Guid categoryId)
         {
-            var result = await _productRepository.GetAllSimpleProduct(page, pageSize ,categoryId);
-            var dtos = result.Select(x => x.ToSimpleDto());
-            return dtos;
+            var products = await _productRepository.GetAllSimpleProduct(page, pageSize ,categoryId);
+            var dtos = products.Select(x => x.ToSimpleDto());
+            var result = new PaginationDto<SimpleProductDto>()
+            {
+                Results = dtos,
+                TotalRecord = await _productRepository.GetAllSimpleProductCount(categoryId)
+            };
+            return result;
         }
 
         public async Task<ProductDto> GetProduct(Guid productId)
@@ -40,9 +45,6 @@ namespace Application.QueryServices
             var dto = result.Select(x => x.ToDto());
             return dto;
         }
-
-
-
 
     }
 }
