@@ -15,7 +15,8 @@ namespace Domain.Products
         public double Price { get; set; }
         public string Guaranty { get; set; }
         public string Description { get; set; }
-       // public Color Color { get; set; }
+        public Brand Brand { get; set; }
+        // public Color Color { get; set; }
         public Category Category { get; set; }
         public IEnumerable<Article> Articles { get; set; }
         public IEnumerable<ProductPicture> Pictures { get; set; }
@@ -30,5 +31,13 @@ namespace Domain.Products
         Blue,
         Yellow,
 
+    }
+
+    public enum Brand
+    {
+        Apple ,
+        Samsung ,
+        Xiaomi ,
+        Huawei
     }
 }

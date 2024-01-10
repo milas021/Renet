@@ -19,7 +19,7 @@ namespace Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands, int page, int pageSize)
         {
             //todo : test this method
 
@@ -31,14 +31,17 @@ namespace Persistance.Repositories
             if (categoryId != Guid.Empty)
                 query = query.Where(x => x.Category.Id == categoryId);
 
-            if(!string.IsNullOrEmpty(name))
-                query = query.Where(x=>x.Name.Contains(name));
+            if (!string.IsNullOrEmpty(name))
+                query = query.Where(x => x.Name.Contains(name));
 
             if (minPrice != null)
-                query = query.Where(x=>x.Price >= minPrice);
+                query = query.Where(x => x.Price >= minPrice);
 
             if (maxPrice != null)
                 query = query.Where(x => x.Price <= maxPrice);
+
+            if (brands != null && brands.Count != 0)
+                query = query.Where(x => brands.Contains(x.Brand));
 
             var skip = (page - 1) * pageSize;
             var result = query.Skip(skip).Take(pageSize).ToList();
@@ -63,9 +66,9 @@ namespace Persistance.Repositories
             if (maxPrice != null)
                 query = query.Where(x => x.Price <= maxPrice);
 
-            var result =await query.CountAsync();
+            var result = await query.CountAsync();
             return result;
-            
+
         }
 
         public async Task<Product> GetById(Guid id)
@@ -80,7 +83,7 @@ namespace Persistance.Repositories
             return result;
         }
 
-        
+
     }
 
 }
