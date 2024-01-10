@@ -12,12 +12,14 @@ namespace Application.Mappers
     {
         public static SimpleProductDto ToSimpleDto(this Product product)
         {
+            var x = product.Pictures.Count();
             var dto = new SimpleProductDto()
             {
+                
                 Id = product.Id,
                 Name = product.Name,
                 Price = product.Price,
-                Picture = product.Pictures== null ?null :product.Pictures.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
+                Picture = (product.Pictures == null || product.Pictures.Count()== 0 ) ?null :product.Pictures.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
             };
             return dto;
         }

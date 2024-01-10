@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.IRepositories;
 using Domain.Products;
+using Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 using System;
@@ -19,7 +20,7 @@ namespace Persistance.Repositories
         {
         }
 
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands, SortType? sort, int page, int pageSize)
         {
             //todo : test this method
 
@@ -42,6 +43,26 @@ namespace Persistance.Repositories
 
             if (brands != null && brands.Count != 0)
                 query = query.Where(x => brands.Contains(x.Brand));
+
+
+
+            if (sort != null)
+            {
+                switch (sort)
+                {
+                    case SortType.Cheapest:
+                        {
+                            query = query.OrderBy(x => x.Price);
+                            break;
+                        }
+                    case SortType.Expensive:
+                        {
+                            query = query.OrderByDescending(x => x.Price);
+                            break;
+                        }
+
+                }
+            }
 
             var skip = (page - 1) * pageSize;
             var result = query.Skip(skip).Take(pageSize).ToList();

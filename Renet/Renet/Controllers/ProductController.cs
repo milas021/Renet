@@ -1,5 +1,6 @@
 ﻿using Application.QueryServices;
 using Domain.Products;
+using Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Renet.Controllers
@@ -14,11 +15,11 @@ namespace Renet.Controllers
         {
             this.productQueryService = productQueryService;
         }
-
+        //todo : استفاده برند که یک اینام در دومین است به عنوان کوئری پارامتر زیاد جالب نیست
         [HttpGet()]
-        public async Task<IActionResult> GetAllProduct(string? name, Guid categoryId, double? minPrice, double? maxPrice,[FromQuery]List<Brand> brands , int page, int pageSize)
+        public async Task<IActionResult> GetAllProduct(string? name, Guid categoryId, double? minPrice, double? maxPrice,[FromQuery]List<Brand> brands ,SortType? sort , int page, int pageSize)
         {
-            var result = await productQueryService.GetAllProduct(name, categoryId, minPrice, maxPrice,brands ,page, pageSize);
+            var result = await productQueryService.GetAllProduct(name, categoryId, minPrice, maxPrice,brands ,sort , page, pageSize);
             return Ok(result);
         }
 

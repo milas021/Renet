@@ -2,6 +2,7 @@
 using Application.IRepositories;
 using Application.Mappers;
 using Domain.Products;
+using Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,9 @@ namespace Application.QueryServices
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands , int page, int pageSize)
+        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands , SortType? sort , int page, int pageSize)
         {
-            var products = await _productRepository.GetAllSimpleProduct(name, categoryId, minPrice, maxPrice,brands , page, pageSize);
+            var products = await _productRepository.GetAllSimpleProduct(name, categoryId, minPrice, maxPrice,brands ,sort, page, pageSize);
             var dtos = products.Select(x => x.ToSimpleDto());
             var result = new PaginationDto<SimpleProductDto>()
             {
