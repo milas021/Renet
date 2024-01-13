@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 using Renet;
+using Renet.Midllewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.MapControllers();
 using (var scope = app.Services.CreateScope())
 {

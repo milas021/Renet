@@ -11,18 +11,20 @@ using System.Threading.Tasks;
 
 namespace Application.CommandHandlers
 {
-    public class BasketCommandHandler : ICommandHandler<AddProductToBasketCommand, AddProductToBasketCommandResponse>
+    public class BasketCommandHandler : ICommandHandler<AddProductToBasketCommand, MessageResponse>
     {
         private readonly IUserRepository _userRepository;
         private readonly IProductRepositories _productRepositories;
+        private readonly IBasketRepository _basketRepository;
 
-        public BasketCommandHandler(IProductRepositories productRepositories, IUserRepository userRepository)
+        public BasketCommandHandler(IProductRepositories productRepositories, IUserRepository userRepository, IBasketRepository basketRepository)
         {
             _productRepositories = productRepositories;
             _userRepository = userRepository;
+            _basketRepository = basketRepository;
         }
 
-        public async Task<AddProductToBasketCommandResponse> Handle(AddProductToBasketCommand command)
+        public async Task<MessageResponse> Handle(AddProductToBasketCommand command)
         {
             var product = await _productRepositories.GetById(command.ProductId);
             var basketItem = new BasketItem(command.ProductId ,command.Count)
@@ -30,11 +32,15 @@ namespace Application.CommandHandlers
                 UnitPrice =product.Price ,   
             };
             var basket = new Basket
-            {
-                Items = new List<BasketItem> {  basketItem } ,
+            {              
                 UserId = command.UserId,
             };
-            return null;
+
+            basket.AddBasketItem(basketItem);
+
+            await _basketRepository.Add(basket);
+
+            return MessageResponse.CreateSuccesMessage(); 
 
             //todo complete this methode
         }

@@ -17,7 +17,7 @@ namespace Domain.Baskets
         public double TotalPrice { get; private set; }
         public double FinalPrice { get;private set; }
         public Guid UserId { get; set; }
-        public List<BasketItem> Items { get; set; } = new List<BasketItem>();
+        public List<BasketItem> Items { get;private set; } = new List<BasketItem>();
 
         public void AddBasketItem(BasketItem item)
         {
