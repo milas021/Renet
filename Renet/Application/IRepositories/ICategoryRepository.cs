@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.IRepositories
 {
-    public interface ICategoryRepository
+    public interface ICategoryRepository : IRepository
     {
         Task<IEnumerable<Category>> GetAll();
     }

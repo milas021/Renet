@@ -16,10 +16,20 @@ namespace Persistance.Repositories
         {
         }
 
+        public async Task Add(User user)
+        {
+            await _context.AddAsync(user);
+        }
+
         public async Task<User> GetById(Guid id)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x=>x.Id == id);
             return user;
+        }
+
+        public async Task Save()
+        {
+           await _context.SaveChangesAsync();
         }
     }
 }

@@ -13,8 +13,10 @@ namespace Persistance.Configuration.UserConfigurations
     {
         public void Configure(EntityTypeBuilder<User> builder)
         {
-           builder.HasKey(x => x.Id);
-           builder.Property(x=>x.Id).ValueGeneratedNever();
+            builder.HasKey(x => x.Id);
+            builder.Property(x => x.Id).ValueGeneratedNever();
+
+            builder.HasOne(x => x.Basket).WithOne().HasForeignKey("BasketId");
         }
     }
 }

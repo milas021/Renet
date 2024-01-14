@@ -19,7 +19,10 @@ namespace Persistance.Repositories
         public ProductRepository(AppDbContext context) : base(context)
         {
         }
-
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands, SortType? sort, int page, int pageSize)
         {
             //todo : test this method

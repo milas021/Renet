@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.IRepositories
 {
-    public interface IBasketRepository
+    public interface IBasketRepository : IRepository
     {
         Task Add(Basket basket);
         Task<Basket> GetByUserId(Guid userId);

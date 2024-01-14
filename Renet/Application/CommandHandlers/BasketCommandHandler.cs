@@ -2,6 +2,7 @@
 using Application.Commands;
 using Application.IRepositories;
 using Domain.Baskets;
+using Domain.Users;
 using Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -26,24 +27,24 @@ namespace Application.CommandHandlers
 
         public async Task<MessageResponse> Handle(AddProductToBasketCommand command)
         {
+            
             var product = await _productRepositories.GetById(command.ProductId);
 
-            var basket = await _basketRepository.GetByUserId(command.UserId);
+            var user = await _userRepository.GetById(command.UserId);
 
-            if (basket == null)
-                basket = new Basket(command.UserId);
-
-            var basketItem = new BasketItem(command.ProductId, command.Count)
+            var basketitem = new BasketItem(command.ProductId ,command.Count)
             {
-                UnitPrice = product.Price,
+                UnitPrice = product.Price 
             };
+            user.UserName = "amin";
 
-            basket.AddBasketItem(basketItem);
 
-            //todo if we have a basket before this line throw exception
-            await _basketRepository.Add(basket);
+            user.Basket.AddBasketItem(basketitem);
+
+            await _userRepository.Save();
 
             return MessageResponse.CreateSuccesMessage();
+
 
         }
     }

@@ -15,7 +15,10 @@ namespace Persistance.Repositories
         public CategoryRepository(AppDbContext context) : base(context)
         {
         }
-
+        public async Task Save()
+        {
+            await _context.SaveChangesAsync();
+        }
         public async Task<IEnumerable<Category>> GetAll()
         {
             var result = await _context.Categories.ToListAsync();
