@@ -1,5 +1,6 @@
 ﻿using Application.IRepositories;
 using Domain.Baskets;
+using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,12 @@ namespace Persistance.Repositories
         {
             await _context.Baskets.AddAsync(basket);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<Basket> GetByUserId(Guid userId)
+        {
+            var result = await _context.Baskets.Where(x => x.UserId == userId).SingleOrDefaultAsync();
+            return result;
         }
     }
 }

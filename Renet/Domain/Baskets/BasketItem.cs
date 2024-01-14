@@ -20,8 +20,7 @@ namespace Domain.Baskets
 
         public Guid Id { get; private set; }
         public Guid ProductId { get; private set; }
-        public int Count { get; private set; }
-        public double Price { get => UnitPrice * Count; }
+        public int Count { get; private set; }        
         public double UnitPrice { get; set; }
     }
 }

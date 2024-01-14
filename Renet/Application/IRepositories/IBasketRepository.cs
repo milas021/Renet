@@ -10,5 +10,6 @@ namespace Application.IRepositories
     public interface IBasketRepository
     {
         Task Add(Basket basket);
+        Task<Basket> GetByUserId(Guid userId);
     }
 }
