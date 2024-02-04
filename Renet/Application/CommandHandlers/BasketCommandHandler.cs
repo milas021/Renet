@@ -28,11 +28,27 @@ namespace Application.CommandHandlers
         public async Task<MessageResponse> Handle(AddProductToBasketCommand command)
         {
 
-            return null;
-                  
-                 
+            var user = await _userRepository.GetById(command.UserId);
+
+            if (user == null)
+                throw new Exception("کاربر یافت نشد");
+
+            Basket basket;
+            basket = await _basketRepository.GetByUserId(user.Id);
+
+            if (basket == null)
+                basket = new Basket(command.UserId);
 
 
+            var item = new BasketItem(command.ProductId, command.Count);
+
+            basket.AddToBasket(item);
+
+            await _basketRepository.Add(basket);
+
+            await _basketRepository.Save();
+
+            return MessageResponse.CreateSuccesMessage();
         }
     }
 }

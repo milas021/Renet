@@ -22,12 +22,18 @@ namespace Persistance.Repositories
         public async Task Add(Basket basket)
         {
             await _context.Baskets.AddAsync(basket);
-            
+
         }
 
         public async Task<Basket> GetByUserId(Guid userId)
         {
-            return null; 
+            var result = await _context.Baskets
+                .Include(x => x.Items)
+                .SingleOrDefaultAsync(x => x.UserId == userId);
+
+
+
+            return result;
         }
     }
 }
