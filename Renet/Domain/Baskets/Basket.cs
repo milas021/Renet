@@ -9,21 +9,9 @@ namespace Domain.Baskets
 {
     public class Basket
     {
-        public Basket ()
-        {
-            Id = Guid.NewGuid();
-            
-        }
-        public Guid Id { get; private set; }
-        public double FinalPrice { get;private set; }
-      
-        public List<BasketItem> Items { get;private set; } = new List<BasketItem>();
-
-        public void AddBasketItem(BasketItem item)
-        {
-            Items.Add(item);
-           
-        }
+        public Guid Id { get; set; }
+        public Guid UserId { get; set; }
+        public List<BasketItem> Items { get; set; }
     }
 
 

@@ -27,23 +27,10 @@ namespace Application.CommandHandlers
 
         public async Task<MessageResponse> Handle(AddProductToBasketCommand command)
         {
-            
-            var product = await _productRepositories.GetById(command.ProductId);
 
-            var user = await _userRepository.GetById(command.UserId);
-
-            var basketitem = new BasketItem(command.ProductId ,command.Count)
-            {
-                UnitPrice = product.Price 
-            };
-            user.UserName = "amin";
-
-
-            user.Basket.AddBasketItem(basketitem);
-
-            await _userRepository.Save();
-
-            return MessageResponse.CreateSuccesMessage();
+            return null;
+                  
+                 
 
 
         }
