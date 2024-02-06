@@ -30,10 +30,11 @@ namespace Renet
         private static void ConfigureServices(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<ProductQueryService>();
+            builder.Services.AddScoped<BasketQueryService>();
         }
         private static void ConfigureRepositories(this WebApplicationBuilder builder) 
         {
-            builder.Services.AddScoped<IProductRepositories ,ProductRepository>();
+            builder.Services.AddScoped<IProductRepository ,ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository , CategoryRepository>();
             builder.Services.AddScoped<IUserRepository , UserRepository>();
             builder.Services.AddScoped<IBasketRepository , BasketRepository>();

@@ -16,6 +16,17 @@ namespace Persistance.Configuration.BasketConfigurations
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedNever();
             builder.HasMany(x => x.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(x => x.RowVersion).IsRowVersion();
+        }
+    }
+
+    public class BasketItemConfiguration : IEntityTypeConfiguration<BasketItem>
+    {
+        public void Configure(EntityTypeBuilder<BasketItem> builder)
+        {
+            builder.HasKey(x=>x.Id);
+            builder.Property(x=>x.Id).ValueGeneratedNever();
         }
     }
 }

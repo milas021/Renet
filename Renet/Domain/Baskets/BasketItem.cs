@@ -8,14 +8,15 @@ namespace Domain.Baskets
 {
     public class BasketItem
     {
-        public BasketItem(Guid productId  , int count)
+        private BasketItem() { }
+        public BasketItem(Guid productId, int count)
         {
             Id = Guid.NewGuid();
             ProductId = productId;
             Count = count;
         }
 
-        public Guid Id { get;private set; }
+        public Guid Id { get; private set; }
         public Guid ProductId { get; set; }
         public int Count { get; set; }
     }

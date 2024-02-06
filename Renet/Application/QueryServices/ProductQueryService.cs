@@ -13,16 +13,16 @@ namespace Application.QueryServices
 {
     public class ProductQueryService
     {
-        private readonly IProductRepositories _productRepository;
+        private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
 
-        public ProductQueryService(IProductRepositories productRepository, ICategoryRepository categoryRepository)
+        public ProductQueryService(IProductRepository productRepository, ICategoryRepository categoryRepository)
         {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands , SortType? sort , int page, int pageSize)
+        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<Brand> brands , SortType? sort , int page, int pageSize)
         {
             var products = await _productRepository.GetAllSimpleProduct(name, categoryId, minPrice, maxPrice,brands ,sort, page, pageSize);
             var dtos = products.Select(x => x.ToSimpleDto());

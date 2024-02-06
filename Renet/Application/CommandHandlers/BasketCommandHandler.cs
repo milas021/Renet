@@ -15,10 +15,10 @@ namespace Application.CommandHandlers
     public class BasketCommandHandler : ICommandHandler<AddProductToBasketCommand, MessageResponse>
     {
         private readonly IUserRepository _userRepository;
-        private readonly IProductRepositories _productRepositories;
+        private readonly IProductRepository _productRepositories;
         private readonly IBasketRepository _basketRepository;
 
-        public BasketCommandHandler(IProductRepositories productRepositories, IUserRepository userRepository, IBasketRepository basketRepository)
+        public BasketCommandHandler(IProductRepository productRepositories, IUserRepository userRepository, IBasketRepository basketRepository)
         {
             _productRepositories = productRepositories;
             _userRepository = userRepository;
@@ -31,22 +31,23 @@ namespace Application.CommandHandlers
             var user = await _userRepository.GetById(command.UserId);
 
             if (user == null)
+            {
                 throw new Exception("کاربر یافت نشد");
+            }
 
-            Basket basket;
-            basket = await _basketRepository.GetByUserId(user.Id);
+            Basket basket = await _basketRepository.GetByUserId(user.Id);
 
             if (basket == null)
+            {
                 basket = new Basket(command.UserId);
-
+                await _basketRepository.Add(basket);
+            }
 
             var item = new BasketItem(command.ProductId, command.Count);
-
             basket.AddToBasket(item);
 
-            await _basketRepository.Add(basket);
-
-            await _basketRepository.Save();
+            await _basketRepository.UpdateEntityAsync(basket);
+           
 
             return MessageResponse.CreateSuccesMessage();
         }

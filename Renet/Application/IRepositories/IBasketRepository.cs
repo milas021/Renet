@@ -11,5 +11,7 @@ namespace Application.IRepositories
     {
         Task Add(Basket basket);
         Task<Basket> GetByUserId(Guid userId);
+
+        Task UpdateEntityAsync(Basket entity);
     }
 }

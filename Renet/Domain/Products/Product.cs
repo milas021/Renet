@@ -12,7 +12,7 @@ namespace Domain.Products
         public Guid Id { get;private set; }
         public string Name { get; set; }
         public string EnglishName { get; set; }
-        public double Price { get; set; }
+        public decimal Price { get; set; }
         public string Guaranty { get; set; }
         public string Description { get; set; }
         public Brand Brand { get; set; }

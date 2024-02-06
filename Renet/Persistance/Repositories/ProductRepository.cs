@@ -14,7 +14,7 @@ using System.Xml.Linq;
 
 namespace Persistance.Repositories
 {
-    public class ProductRepository : Repository, IProductRepositories
+    public class ProductRepository : Repository, IProductRepository
     {
         public ProductRepository(AppDbContext context) : base(context)
         {
@@ -23,7 +23,7 @@ namespace Persistance.Repositories
         {
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, double? minPrice, double? maxPrice, List<Brand> brands, SortType? sort, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<Brand> brands, SortType? sort, int page, int pageSize)
         {
             //todo : test this method
 
@@ -73,7 +73,7 @@ namespace Persistance.Repositories
 
         }
 
-        public async Task<int> GetAllSimpleProductCount(string name, Guid categoryId, double? minPrice, double? maxPrice)
+        public async Task<int> GetAllSimpleProductCount(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice)
         {
 
             var query = _context.Products.AsQueryable();
@@ -107,7 +107,7 @@ namespace Persistance.Repositories
             return result;
         }
 
-
+       
     }
 
 }
