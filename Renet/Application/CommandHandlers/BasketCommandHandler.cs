@@ -44,10 +44,12 @@ namespace Application.CommandHandlers
             }
 
             var item = new BasketItem(command.ProductId, command.Count);
-            basket.AddToBasket(item);
 
-            await _basketRepository.UpdateEntityAsync(basket);
-           
+            await _basketRepository.AddBasketItemToBasket(basket, item);
+
+
+            await _basketRepository.Save();
+
 
             return MessageResponse.CreateSuccesMessage();
         }

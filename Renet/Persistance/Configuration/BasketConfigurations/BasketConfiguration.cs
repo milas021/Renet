@@ -17,7 +17,6 @@ namespace Persistance.Configuration.BasketConfigurations
             builder.Property(x => x.Id).ValueGeneratedNever();
             builder.HasMany(x => x.Items).WithOne().OnDelete(DeleteBehavior.Cascade);
 
-            builder.Property(x => x.RowVersion).IsRowVersion();
         }
     }
 

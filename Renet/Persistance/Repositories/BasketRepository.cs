@@ -25,22 +25,7 @@ namespace Persistance.Repositories
             await _context.Baskets.AddAsync(basket);
         }
 
-        public async Task UpdateEntityAsync(Basket entity)
-        {
-            // Attach the entity to the context if it's not already tracked
-            if (!_context.Set<Basket>().Local.Any(e => e.Id == entity.Id))
-            {
-                _context.Set<Basket>().Attach(entity);
-            }
-
-            // Mark the entity as modified
-            _context.Entry(entity).State = EntityState.Modified;
-
-
-            // Save changes to the database
-            _context.ChangeTracker.DetectChanges();
-            await _context.SaveChangesAsync();
-        }
+        
 
         public async Task<Basket> GetByUserId(Guid userId)
         {
@@ -49,6 +34,13 @@ namespace Persistance.Repositories
                 .SingleOrDefaultAsync(x => x.UserId == userId);
 
             return result;
+        }
+
+        public async Task AddBasketItemToBasket(Basket basket, BasketItem item)
+        {
+            basket.AddToBasket(item);
+            _context.Entry(item).State = EntityState.Added;
+
         }
     }
 }

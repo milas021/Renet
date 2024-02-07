@@ -21,9 +21,6 @@ namespace Domain.Baskets
         public List<BasketItem> Items { get; set; } = new List<BasketItem>();
 
 
-        [Timestamp]
-        public byte[] RowVersion { get; set; }
-
         public void AddToBasket(BasketItem item) 
         {
             Items.Add(item);
