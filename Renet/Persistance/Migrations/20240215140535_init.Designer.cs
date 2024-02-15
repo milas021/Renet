@@ -12,8 +12,8 @@ using Persistance.Context;
 namespace Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240206091137_RowVersion")]
-    partial class RowVersion
+    [Migration("20240215140535_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -29,12 +29,6 @@ namespace Persistance.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<byte[]>("RowVersion")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -235,6 +229,57 @@ namespace Persistance.Migrations
                     b.ToTable("ProductPictures");
                 });
 
+            modelBuilder.Entity("Domain.Tokens.Token", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expired")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("LifeTime")
+                        .HasColumnType("int");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserAgentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserID")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserAgentId");
+
+                    b.ToTable("Tokens");
+                });
+
+            modelBuilder.Entity("Domain.Tokens.UserAgent", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Browser")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OS")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserAgents");
+                });
+
             modelBuilder.Entity("Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -295,6 +340,17 @@ namespace Persistance.Migrations
                     b.HasOne("Domain.Products.Product", null)
                         .WithMany("Pictures")
                         .HasForeignKey("ProductId");
+                });
+
+            modelBuilder.Entity("Domain.Tokens.Token", b =>
+                {
+                    b.HasOne("Domain.Tokens.UserAgent", "UserAgent")
+                        .WithMany()
+                        .HasForeignKey("UserAgentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("UserAgent");
                 });
 
             modelBuilder.Entity("Domain.Baskets.Basket", b =>

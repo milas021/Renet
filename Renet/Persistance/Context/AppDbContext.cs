@@ -2,6 +2,7 @@
 using Domain.Coupons;
 using Domain.Payments;
 using Domain.Products;
+using Domain.Tokens;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -29,5 +30,8 @@ namespace Persistance.Context
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Basket> Baskets { get; set; }
         public DbSet<BasketItem> BasketItems { get; set; }
+
+        public DbSet<Token> Tokens { get; set; }
+        public DbSet<UserAgent> UserAgents { get; set; }
     }
 }

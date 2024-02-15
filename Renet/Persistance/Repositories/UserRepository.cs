@@ -27,6 +27,16 @@ namespace Persistance.Repositories
             return user;
         }
 
+        public Task<User> GetByUserName(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsUserExist(string userName)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task Save()
         {
            await _context.SaveChangesAsync();
