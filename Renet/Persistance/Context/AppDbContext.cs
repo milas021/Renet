@@ -32,6 +32,6 @@ namespace Persistance.Context
         public DbSet<BasketItem> BasketItems { get; set; }
 
         public DbSet<Token> Tokens { get; set; }
-        public DbSet<UserAgent> UserAgents { get; set; }
+
     }
 }

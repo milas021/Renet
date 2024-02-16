@@ -10,9 +10,7 @@ namespace Domain.Tokens
 {
     public class UserAgent
     {
-        
         public Guid Id { get; set; }
-
         public string OS { get; set; }
 
         public string Browser { get; set; }

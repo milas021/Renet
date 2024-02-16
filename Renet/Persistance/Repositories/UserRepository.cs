@@ -32,9 +32,13 @@ namespace Persistance.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> IsUserExist(string userName)
+        public async Task<bool> IsUserExist(string userName)
         {
-            throw new NotImplementedException();
+           var result = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == userName);
+            if (result == null)
+                return false;
+            else
+                return true;
         }
 
         public async Task Save()

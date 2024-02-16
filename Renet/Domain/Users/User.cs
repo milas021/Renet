@@ -9,6 +9,7 @@ namespace Domain.Users
 {
     public class User
     {
+        private User() { }
         public User(string userName , string hashedPassword)
         {
             Id = Guid.NewGuid();
@@ -18,7 +19,7 @@ namespace Domain.Users
         public Guid Id { get;private set; }
         public string UserName { get;private set; }
         public string Password { get;private set; }
-        public string Email { get; set; }
+        public string? Email { get; set; }
        
 
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.Commands
 {
-    public class RegistrationCommsnd :CommandBase
+    public class RegistrationCommand :CommandBase
     {
         public string   UserName { get; set; }
         //public string Email { get; set; }
