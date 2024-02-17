@@ -30,6 +30,15 @@ namespace Renet.Controllers
             return Ok(result);
         }
 
+        [HttpPost("Login")]
+        public async Task<IActionResult> Login(LoginCommand command)
+        {
+            var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
+            var result = await _authCommandHandler.Login(command, userAgent);
+            AddRefreshTokenCookie(result.Tokens);
+            return Ok(result);
+        }
+
 
         #region Private Methods
 

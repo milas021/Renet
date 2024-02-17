@@ -76,14 +76,28 @@ namespace Application.Services
                 refreshToken = Convert.ToBase64String(randomNumber);
             }
 
-            var token = new Token(userId, refreshToken, userAgent);
-            await _tokenRepository.Add(token);
-            await _tokenRepository.Save();
+            var token = await _tokenRepository.Get(userId , userAgent.OS, userAgent.Browser);
+
+            if(token == null)
+            {
+                token = new Token(userId, refreshToken, userAgent);
+                await _tokenRepository.Add(token);
+                await _tokenRepository.Save();
+                return token;
+            }
+
+            else
+            {
+                token.UpdateToken(refreshToken);
+                await _tokenRepository.Save();
+            }
+
             return token;
-
-
+            
 
         }
+
+       
 
         private string GenerateAccessToken(User user)
         {

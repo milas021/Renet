@@ -40,8 +40,8 @@ namespace Application.CommandHandlers
             await _userRepository.Save();
             var userDto = user.ToDto();
 
-            var tokens =await _tokenService.GenerateTokens(user, userAgent);
-            
+            var tokens = await _tokenService.GenerateTokens(user, userAgent);
+
             var result = new UserData
             {
                 Tokens = tokens,
@@ -52,6 +52,28 @@ namespace Application.CommandHandlers
 
 
 
+
+        }
+
+        public async Task<UserData> Login(LoginCommand command , UserAgent userAgent)
+        {
+           var user = await _userRepository.GetByUserName(command.UserName);
+
+            if (user == null)
+                throw new Exception("کاربر وجود ندارد");
+
+            if (command.Password.ToBase64Encode() != user.Password)
+                throw new Exception("رمز نا درست است");
+
+
+            var tokens = await _tokenService.GenerateTokens(user, userAgent);
+            var userDto = user.ToDto();
+            var result = new UserData
+            {
+                Tokens = tokens,
+                User = userDto
+            };
+            return result;
 
         }
 
