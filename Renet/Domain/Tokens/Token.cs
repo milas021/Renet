@@ -36,6 +36,7 @@ namespace Domain.Tokens
 
         public DateTime Expired { get; private set; }
 
+        //todo : move life time to appsetting
         public int LifeTime { get; private set; }
 
         public void UpdateToken(string refreshToken)

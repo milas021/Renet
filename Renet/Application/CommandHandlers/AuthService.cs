@@ -16,7 +16,7 @@ using System.Xml;
 
 namespace Application.CommandHandlers
 {
-    public class AuthService 
+    public class AuthService
     {
         private readonly IUserRepository _userRepository;
         private readonly TokenService _tokenService;
@@ -27,9 +27,9 @@ namespace Application.CommandHandlers
             _tokenService = tokenService;
         }
 
-        public async Task<UserData> Registration(RegistrationCommand command , UserAgent userAgent)
+        public async Task<UserData> Registration(RegistrationCommand command, UserAgent userAgent)
         {
-           var isExist = await _userRepository.IsUserExist(command.UserName);
+            var isExist = await _userRepository.IsUserExist(command.UserName);
 
             if (isExist)
                 throw new Exception("کاربر وجود دارد");
@@ -40,8 +40,7 @@ namespace Application.CommandHandlers
             await _userRepository.Save();
             var userDto = user.ToDto();
 
-            var tokens = _tokenService.GenerateTokens(user);
-            await _tokenService.SaveRefreshTokenAsync(user.Id, tokens.RefreshToken, userAgent);
+            var tokens =await _tokenService.GenerateTokens(user, userAgent);
             
             var result = new UserData
             {
@@ -51,11 +50,11 @@ namespace Application.CommandHandlers
 
             return result;
 
-            
+
 
 
         }
 
-       
+
     }
 }

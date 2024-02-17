@@ -27,13 +27,19 @@ namespace Application.Services
             _tokenRepository = tokenRepository;
         }
 
-        public TokenDto GenerateTokens(User user)
+        public async Task<TokenDto> GenerateTokens(User user, UserAgent userAgent)
         {
-            var refreshToken = this.GenerateRefreshToken();
+            var refreshToken = await GenerateRefreshToken(user.Id, userAgent);
 
             var accessToken = this.GenerateAccessToken(user);
 
-            return new TokenDto { AccessToken = accessToken, RefreshToken = refreshToken };
+            return new TokenDto 
+            {
+                AccessToken = accessToken,
+                RefreshToken = refreshToken.RefreshToken ,
+                Expired = refreshToken.Expired ,
+                LifeTime = refreshToken.LifeTime ,
+            };
         }
 
 
@@ -60,15 +66,23 @@ namespace Application.Services
 
         #region PrivateMethod
 
-        private string GenerateRefreshToken()
+        private async Task<Token> GenerateRefreshToken(Guid userId, UserAgent userAgent)
         {
             var randomNumber = new byte[32];
-
+            string refreshToken = "";
             using (var generator = RandomNumberGenerator.Create())
             {
                 generator.GetBytes(randomNumber);
-                return Convert.ToBase64String(randomNumber);
+                refreshToken = Convert.ToBase64String(randomNumber);
             }
+
+            var token = new Token(userId, refreshToken, userAgent);
+            await _tokenRepository.Add(token);
+            await _tokenRepository.Save();
+            return token;
+
+
+
         }
 
         private string GenerateAccessToken(User user)
