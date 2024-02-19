@@ -21,6 +21,11 @@ namespace Persistance.Repositories
             await _context.Tokens.AddAsync(token);
         }
 
+        public async Task Delete(Token token)
+        {
+            _context.Tokens.Remove(token);
+        }
+
         public async Task<Token> Get(Guid userId, string os, string browser)
         {
             var result = await _context.Tokens.SingleOrDefaultAsync(x => 
@@ -28,6 +33,12 @@ namespace Persistance.Repositories
             && x.UserAgent.OS == os 
             && x.UserAgent.Browser == browser);
 
+            return result;
+        }
+
+        public async Task<Token> Get(string refreshToken)
+        {
+            var result = await _context.Tokens.SingleOrDefaultAsync(x => x.RefreshToken == refreshToken);
             return result;
         }
 

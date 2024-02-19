@@ -39,6 +39,20 @@ namespace Renet.Controllers
             return Ok(result);
         }
 
+        [HttpPost("Logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var cookieExist = this.Request.Cookies.TryGetValue(refreshTokenKey, out var refreshTokenValue);
+            if (!cookieExist)
+                throw new Exception("رفرش توکن یافت نشد");
+
+            await _authCommandHandler.Logout(refreshTokenValue);
+
+            this.Response.Cookies.Delete(refreshTokenKey);
+
+            return Ok();
+        }
+
 
         #region Private Methods
 

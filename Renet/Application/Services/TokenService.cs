@@ -33,12 +33,12 @@ namespace Application.Services
 
             var accessToken = this.GenerateAccessToken(user);
 
-            return new TokenDto 
+            return new TokenDto
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken.RefreshToken ,
-                Expired = refreshToken.Expired ,
-                LifeTime = refreshToken.LifeTime ,
+                RefreshToken = refreshToken.RefreshToken,
+                Expired = refreshToken.Expired,
+                LifeTime = refreshToken.LifeTime,
             };
         }
 
@@ -61,6 +61,16 @@ namespace Application.Services
             }
         }
 
+        public async Task RemoveRefreshToken(string refreshToken)
+        {
+            var token = await _tokenRepository.Get(refreshToken);
+            if (token == null)
+                throw new Exception("رفرش توکن یافت نشد");
+
+            await _tokenRepository.Delete(token);
+
+        }
+
 
 
 
@@ -76,9 +86,9 @@ namespace Application.Services
                 refreshToken = Convert.ToBase64String(randomNumber);
             }
 
-            var token = await _tokenRepository.Get(userId , userAgent.OS, userAgent.Browser);
+            var token = await _tokenRepository.Get(userId, userAgent.OS, userAgent.Browser);
 
-            if(token == null)
+            if (token == null)
             {
                 token = new Token(userId, refreshToken, userAgent);
                 await _tokenRepository.Add(token);
@@ -93,11 +103,11 @@ namespace Application.Services
             }
 
             return token;
-            
+
 
         }
 
-       
+
 
         private string GenerateAccessToken(User user)
         {

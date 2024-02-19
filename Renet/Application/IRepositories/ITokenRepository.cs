@@ -11,5 +11,7 @@ namespace Application.IRepositories
     {
         Task<Token> Get(Guid userId, string os, string browser);
         Task Add(Token token);
+        Task<Token> Get(string refreshToken);
+        Task Delete(Token token);
     }
 }

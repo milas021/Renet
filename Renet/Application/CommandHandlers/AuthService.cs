@@ -77,6 +77,11 @@ namespace Application.CommandHandlers
 
         }
 
+        public async Task Logout(string refreshToken)
+        {
+            await _tokenService.RemoveRefreshToken(refreshToken);
+        }
+
 
     }
 }
