@@ -21,7 +21,7 @@ namespace Renet.Controllers
         }
 
 
-        [HttpPost("Registration")]
+        [HttpPost(nameof(Registration))]
         public async Task<IActionResult> Registration(RegistrationCommand command)
         {
             var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
@@ -30,7 +30,7 @@ namespace Renet.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Login")]
+        [HttpPost(nameof(Login))]
         public async Task<IActionResult> Login(LoginCommand command)
         {
             var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
@@ -39,7 +39,7 @@ namespace Renet.Controllers
             return Ok(result);
         }
 
-        [HttpPost("Logout")]
+        [HttpDelete(nameof(Logout))]
         public async Task<IActionResult> Logout()
         {
             var cookieExist = this.Request.Cookies.TryGetValue(refreshTokenKey, out var refreshTokenValue);
@@ -51,6 +51,21 @@ namespace Renet.Controllers
             this.Response.Cookies.Delete(refreshTokenKey);
 
             return Ok();
+        }
+
+        [HttpPut(nameof(Refresh))]
+        public async Task<IActionResult> Refresh(RefreshTokenCommand command)
+        {
+            var cookieExist = this.Request.Cookies.TryGetValue(refreshTokenKey, out var refreshTokenValue);
+            if (!cookieExist)
+                throw new Exception("رفرش توکن یافت نشد");
+
+            var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
+
+            var result = await _authCommandHandler.Refresh(command.AccessToken,refreshTokenValue ,userAgent );
+            AddRefreshTokenCookie(result.Tokens);
+
+            return Ok(result);
         }
 
 

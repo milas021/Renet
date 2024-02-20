@@ -20,11 +20,13 @@ namespace Application.CommandHandlers
     {
         private readonly IUserRepository _userRepository;
         private readonly TokenService _tokenService;
+        private readonly ITokenRepository _tokenRepository;
 
-        public AuthService(IUserRepository userRepository, TokenService tokenService)
+        public AuthService(IUserRepository userRepository, TokenService tokenService, ITokenRepository tokenRepository)
         {
             _userRepository = userRepository;
             _tokenService = tokenService;
+            _tokenRepository = tokenRepository;
         }
 
         public async Task<UserData> Registration(RegistrationCommand command, UserAgent userAgent)
@@ -50,14 +52,11 @@ namespace Application.CommandHandlers
 
             return result;
 
-
-
-
         }
 
-        public async Task<UserData> Login(LoginCommand command , UserAgent userAgent)
+        public async Task<UserData> Login(LoginCommand command, UserAgent userAgent)
         {
-           var user = await _userRepository.GetByUserName(command.UserName);
+            var user = await _userRepository.GetByUserName(command.UserName);
 
             if (user == null)
                 throw new Exception("کاربر وجود ندارد");
@@ -82,6 +81,26 @@ namespace Application.CommandHandlers
             await _tokenService.RemoveRefreshToken(refreshToken);
         }
 
+        public async Task<UserData> Refresh(string accessToken, string refreshToken, UserAgent userAgent)
+        {
+            await _tokenService.ValidateAccessToken(accessToken);
+            await _tokenService.ValidateRefreshToken(refreshToken);
+
+            var currentToken = await _tokenRepository.Get(refreshToken);
+
+            var user = await _userRepository.GetById(currentToken.UserID);
+            var userDto = user.ToDto();
+            var tokens = await _tokenService.GenerateTokens(user, userAgent);
+
+            var userdata = new UserData
+            {
+                Tokens = tokens,
+                User = userDto
+            };
+
+            return userdata;
+
+        }
 
     }
 }

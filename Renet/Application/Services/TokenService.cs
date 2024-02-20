@@ -71,6 +71,21 @@ namespace Application.Services
 
         }
 
+        public async Task ValidateRefreshToken(string refreshToken)
+        {
+            var token = await _tokenRepository.Get(refreshToken);
+
+            if (token == null)
+                throw new Exception("رفرش توکن در دیتابیس موجود نسیت");
+
+            if (DateTime.Now >= token.Expired)
+                throw new Exception("رفرش توکن معتبر نیست");
+        }
+
+        public async Task ValidateAccessToken(string accessToken)
+        {
+           
+        }
 
 
 
