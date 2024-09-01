@@ -25,5 +25,17 @@ namespace Persistance.Repositories
             return result;
 
         }
+
+        public async Task Add(Category category)
+        {
+            await _context.Categories.AddAsync(category);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> IsExist(string name)
+        {
+           var result =await _context.Categories.AnyAsync(c => c.Name == name);
+            return result;
+        }
     }
 }

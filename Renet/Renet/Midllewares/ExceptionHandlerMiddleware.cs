@@ -1,5 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Application.CommandResponse;
+using Infrastructure;
+using Infrastructure.Exceptions;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Renet.Midllewares
@@ -16,14 +20,26 @@ namespace Renet.Midllewares
 
         public async Task Invoke(HttpContext httpContext)
         {
+            var options = new JsonSerializerOptions
+            {
+                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping, // تنظیمات برای پشتیبانی از کاراکترهای غیر لاتین
+                WriteIndented = true // برای خوانایی بهتر JSON نهایی
+            };
             try
             {
                 await _next(httpContext);
 
             }
+            catch (AppException e)
+            {
+                
+                await httpContext.Response.WriteAsync(JsonSerializer.Serialize(MessageResponse.CreateErrorMessage(e.Message) , options));
+            }
             catch (Exception e)
             {
-                Console.WriteLine(e.Message);
+                
+                await httpContext.Response.WriteAsync(JsonSerializer.Serialize(MessageResponse.CreateErrorMessage(ErrorMessage.UnkonwError),options));
+
             }
         }
     }

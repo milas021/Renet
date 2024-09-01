@@ -10,5 +10,7 @@ namespace Application.IRepositories
     public interface ICategoryRepository : IRepository
     {
         Task<IEnumerable<Category>> GetAll();
+        Task Add(Category category);
+        Task<bool> IsExist(string name);
     }
 }

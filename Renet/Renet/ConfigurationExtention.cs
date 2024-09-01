@@ -29,6 +29,7 @@ namespace Renet
         private static void ConfigureCommandHandlers(this WebApplicationBuilder builder)
         {
             builder.Services.AddScoped<BasketCommandHandler>();
+            builder.Services.AddScoped<ProductCommandHandler>();
         }
         private static void ConfigureServices(this WebApplicationBuilder builder)
         {
