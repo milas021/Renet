@@ -15,13 +15,18 @@ namespace Domain.Users
             Id = Guid.NewGuid();
             UserName = userName;
             Password = hashedPassword;
+            Role = UserRole.Customer;
         }
         public Guid Id { get;private set; }
         public string UserName { get;private set; }
         public string Password { get;private set; }
         public string? Email { get; set; }
+        public UserRole Role { get;private set; }
        
-
-
+    }
+    public enum UserRole
+    {
+        Admin,
+        Customer
     }
 }

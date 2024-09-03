@@ -29,8 +29,11 @@ namespace Application.CommandHandlers
             if (_categoryRepository.IsExist(command.Name).Result)
                 throw new AppException(ErrorMessage.DuplicateCategoryName);
 
+            if(string.IsNullOrEmpty(command.Image) || string.IsNullOrEmpty(command.Icon))
+                throw new AppException(ErrorMessage.InvalidCategoryIconOrImage);
 
-            var category = new Category(command.Name);
+
+            var category = new Category(command.Name , command.Icon , command.Image);
             await _categoryRepository.Add(category);
 
             return MessageResponse.CreateSuccesMessage();

@@ -6,6 +6,7 @@ using Application.Services;
 using Domain.Tokens;
 using Domain.Users;
 using Infrastructure;
+using Infrastructure.Exceptions;
 using Infrastructure.Extentions;
 using System;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace Application.CommandHandlers
     public class AuthService
     {
         private readonly IUserRepository _userRepository;
+      
         private readonly TokenService _tokenService;
         private readonly ITokenRepository _tokenRepository;
 
@@ -27,6 +29,7 @@ namespace Application.CommandHandlers
             _userRepository = userRepository;
             _tokenService = tokenService;
             _tokenRepository = tokenRepository;
+          
         }
 
         public async Task<UserData> Registration(RegistrationCommand command, UserAgent userAgent)
@@ -61,6 +64,7 @@ namespace Application.CommandHandlers
             if (user == null)
                 throw new Exception("کاربر وجود ندارد");
 
+            //todo : why base64 ??
             if (command.Password.ToBase64Encode() != user.Password)
                 throw new Exception("رمز نا درست است");
 
@@ -101,6 +105,9 @@ namespace Application.CommandHandlers
             return userdata;
 
         }
+
+
+        
 
     }
 }

@@ -10,5 +10,7 @@ namespace Application.Commands.ProductCommands
     public class AddCategoryCommand :CommandBase
     {
         public string Name { get; set; }
+        public string Icon { get; set; }
+        public string Image { get; set; }
     }
 }
