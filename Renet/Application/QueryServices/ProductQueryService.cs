@@ -22,7 +22,7 @@ namespace Application.QueryServices
             _categoryRepository = categoryRepository;
         }
 
-        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<Brand> brands , SortType? sort , int page, int pageSize)
+        public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<string> brands , SortType? sort , int page, int pageSize)
         {
             var products = await _productRepository.GetAllSimpleProduct(name, categoryId, minPrice, maxPrice,brands ,sort, page, pageSize);
             var dtos = products.Select(x => x.ToSimpleDto());
@@ -46,6 +46,13 @@ namespace Application.QueryServices
             var result = await _categoryRepository.GetAll();
             var dto = result.Select(x => x.ToDto());
             return dto;
+        }
+
+        public async Task<IEnumerable<string>> GetBrands(string? filter)
+        {
+            var result = await _productRepository.GetBrands(filter);
+            return result;
+            
         }
 
     }

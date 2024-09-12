@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Products
+namespace Application.Commands.ProductCommands
 {
-    public class ProductPicture
+    public class AddProductImageCommand
     {
-        public Guid Id { get; set; }
+      
         public string Name { get; set; }
-        public bool IsMainPicture { get; set; }
+        public bool IsMainImage { get; set; }
     }
 }

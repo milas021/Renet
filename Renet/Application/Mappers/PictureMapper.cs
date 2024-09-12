@@ -10,7 +10,7 @@ namespace Application.Mappers
 {
     public static class PictureMapper
     {
-        public static ProductPictureDto ToDto(this ProductPicture picture)
+        public static ProductPictureDto ToDto(this ProductImage picture)
         {
             var dto = new ProductPictureDto()
             {

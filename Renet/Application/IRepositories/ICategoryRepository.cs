@@ -12,5 +12,6 @@ namespace Application.IRepositories
         Task<IEnumerable<Category>> GetAll();
         Task Add(Category category);
         Task<bool> IsExist(string name);
+        Task<Category> GetById(Guid id);
     }
 }

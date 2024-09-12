@@ -9,35 +9,51 @@ namespace Domain.Products
 {
     public class Product
     {
-        public Guid Id { get;private set; }
+        public Product()
+        {
+            Id = Guid.NewGuid();
+        }
+        public Guid Id { get; private set; }
         public string Name { get; set; }
         public string EnglishName { get; set; }
-        public decimal Price { get; set; }
+
         public string Guaranty { get; set; }
         public string Description { get; set; }
-        public Brand Brand { get; set; }
-        public Color Color { get; set; }
+        public string Brand { get; set; }
+
         public Category Category { get; set; }
+        public IEnumerable<ProductVariant> Variants { get; set; }
         public IEnumerable<Article> Articles { get; set; }
-        public IEnumerable<ProductPicture> Pictures { get; set; }
+        public IEnumerable<ProductImage> Images { get; set; }
         public IEnumerable<Feature> Features { get; set; }
 
+
+        public decimal GetMinPrice()
+        {
+            var min = Variants.Min(x => x.Price);
+            return min;
+        }
+
+        public decimal GetMaxPrice()
+        {
+            var max = Variants.Max(x => x.Price);
+            return max;
+        }
+
+        public bool AnySmallerPrice(decimal price)
+        {
+            return Variants.Any(x => x.Price < price);
+        }
+
+        public bool AnyBiggerPrice(decimal price)
+        {
+            return Variants.Any(x => x.Price > price);
+        }
     }
 
-    public enum Color
-    {
-        Red,
-        Green,
-        Blue,
-        Yellow,
 
-    }
 
-    public enum Brand
-    {
-        Apple ,
-        Samsung ,
-        Xiaomi ,
-        Huawei
-    }
+
+
+   
 }

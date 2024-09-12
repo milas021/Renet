@@ -1,22 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Products
 {
-    public class Feature
+    public class ProductImage
     {
-        public Feature(string name  , string value)
+        public ProductImage()
+        {
+            
+        }
+        public ProductImage(string name , bool isMain=false)
         {
             Id = Guid.NewGuid();
             Name = name;
-            Value = value;
+            IsMainPicture = isMain;
         }
         public Guid Id { get;private set; }
         public string Name { get;private set; }
-        public string Value { get;private set; }
+        public bool IsMainPicture { get;private set; }
     }
 }

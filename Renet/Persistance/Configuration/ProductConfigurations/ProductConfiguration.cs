@@ -17,7 +17,7 @@ namespace Persistance.Configuration.ProductConfigurations
             builder.Property(x=>x.Id).ValueGeneratedNever();
 
             builder.HasMany(x => x.Articles).WithOne().OnDelete(DeleteBehavior.Cascade);
-            builder.HasMany(x=>x.Pictures).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x=>x.Images).WithOne().OnDelete(DeleteBehavior.Cascade);
             builder.HasMany(x=>x.Features).WithOne().OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(x => x.Category).WithOne().HasForeignKey<Category>("ProductId");

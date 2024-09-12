@@ -25,7 +25,10 @@ namespace Persistance.Context
         public DbSet<Category> Categories { get; set; }
         public DbSet<Feature> Features { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductPicture> ProductPictures { get; set; }
+        public DbSet<ProductImage> ProductPictures { get; set; }
+        public DbSet<Color> Colors { get; set; }
+        public DbSet<ProductVariant> Variants { get; set; }
+
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
         public DbSet<Basket> Baskets { get; set; }

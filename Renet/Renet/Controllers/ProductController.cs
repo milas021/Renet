@@ -17,7 +17,7 @@ namespace Renet.Controllers
         }
         //todo : استفاده برند که یک اینام در دومین است به عنوان کوئری پارامتر زیاد جالب نیست
         [HttpGet()]
-        public async Task<IActionResult> GetAllProduct(string? name, Guid categoryId, decimal? minPrice, decimal? maxPrice,[FromQuery]List<Brand> brands ,SortType? sort , int page, int pageSize)
+        public async Task<IActionResult> GetAllProduct(string? name, Guid categoryId, decimal? minPrice, decimal? maxPrice,[FromQuery]List<string> brands ,SortType? sort , int page, int pageSize)
         {
             var result = await productQueryService.GetAllProduct(name, categoryId, minPrice, maxPrice,brands ,sort , page, pageSize);
             return Ok(result);

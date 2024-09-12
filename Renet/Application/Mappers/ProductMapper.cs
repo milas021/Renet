@@ -12,14 +12,14 @@ namespace Application.Mappers
     {
         public static SimpleProductDto ToSimpleDto(this Product product)
         {
-            var x = product.Pictures.Count();
+            var x = product.Images.Count();
             var dto = new SimpleProductDto()
             {
                 
                 Id = product.Id,
                 Name = product.Name,
-                Price = product.Price,
-                Picture = (product.Pictures == null || product.Pictures.Count()== 0 ) ?null :product.Pictures.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
+                Price = product.GetMinPrice(),
+                Picture = (product.Images == null || product.Images.Count()== 0 ) ?null :product.Images.Where(x=>x.IsMainPicture).FirstOrDefault().Name ,
             };
             return dto;
         }
@@ -30,7 +30,7 @@ namespace Application.Mappers
             {
                 Id = product.Id,
                 Name = product.Name,
-                Price = product.Price,
+                //Price = product.Price,
                 Description = product.Description,
                 EnglishName = product.EnglishName,
                 Guaranty = product.Guaranty,
@@ -38,7 +38,7 @@ namespace Application.Mappers
                 Articles = product.Articles.Select(x=>x.ToDto()).ToList(),
                 Category = product.Category.ToDto(),
                 Features = product.Features.Select(x=>x.ToDto()).ToList(),
-                PictureDtos = product.Pictures.Select(x=>x.ToDto()).ToList()
+                PictureDtos = product.Images.Select(x=>x.ToDto()).ToList()
             };
             return dto;
         }

@@ -1,5 +1,6 @@
 ﻿using Application.CommandHandlers;
 using Application.Commands.ProductCommands;
+using Application.QueryServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,10 +11,12 @@ namespace Renet.Controllers.AdminController
     public class AdminProductController : ControllerBase
     {
         private readonly ProductCommandHandler _productCommandHandler;
+        private readonly ProductQueryService _productQueryService;
 
-        public AdminProductController(ProductCommandHandler productCommandHandler)
+        public AdminProductController(ProductCommandHandler productCommandHandler, ProductQueryService productQueryService)
         {
             _productCommandHandler = productCommandHandler;
+            _productQueryService = productQueryService;
         }
         [HttpPost("category")]
         public async Task<IActionResult> AddCategory(AddCategoryCommand command)
@@ -23,5 +26,28 @@ namespace Renet.Controllers.AdminController
             return Ok(result);
 
         }
+        [HttpPost("product")]
+        public async Task<IActionResult> AddProduct (AddProductCommand command)
+        {
+            var result = await _productCommandHandler.Handle(command);
+            return Ok(result);
+        }
+
+        [HttpGet("category")]
+        public async Task<IActionResult> GetCategory()
+        {
+            var result = await _productQueryService.GetAllCategories();
+            return Ok(result);
+        }
+
+        [HttpGet("product/brand")]
+        public async Task<IActionResult> GetBrands(string? filter)
+        {
+            var result = await _productQueryService.GetBrands(filter);
+            return Ok(result);
+        }
     }
+
+  
+
 }

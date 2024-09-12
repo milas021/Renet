@@ -8,8 +8,15 @@ namespace Domain.Products
 {
     public class Article
     {
-        public Guid Id { get; set; }
-        public string Title { get; set; }
-        public string Text { get; set; }
+        public Article(string title , string text)
+        {
+            Id = Guid.NewGuid();
+            Title = title;
+            Text = text;
+
+        }
+        public Guid Id { get;private set; }
+        public string Title { get;private set; }
+        public string Text { get;private set; }
     }
 }

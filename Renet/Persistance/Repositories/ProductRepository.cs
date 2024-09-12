@@ -23,12 +23,12 @@ namespace Persistance.Repositories
         {
             await _context.SaveChangesAsync();
         }
-        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<Brand> brands, SortType? sort, int page, int pageSize)
+        public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<string> brands, SortType? sort, int page, int pageSize)
         {
             //todo : test this method
 
             var query = _context.Products
-                .Include(x => x.Pictures)
+                .Include(x => x.Images)
                 .Include(x => x.Category)
                 .AsQueryable();
 
@@ -39,10 +39,10 @@ namespace Persistance.Repositories
                 query = query.Where(x => x.Name.Contains(name));
 
             if (minPrice != null)
-                query = query.Where(x => x.Price >= minPrice);
+                query = query.Where(x => x.AnyBiggerPrice(minPrice.Value));
 
             if (maxPrice != null)
-                query = query.Where(x => x.Price <= maxPrice);
+                query = query.Where(x => x.AnySmallerPrice(maxPrice.Value));
 
             if (brands != null && brands.Count != 0)
                 query = query.Where(x => brands.Contains(x.Brand));
@@ -55,12 +55,12 @@ namespace Persistance.Repositories
                 {
                     case SortType.Cheapest:
                         {
-                            query = query.OrderBy(x => x.Price);
+                            query = query.OrderBy(x => x.GetMinPrice());
                             break;
                         }
                     case SortType.Expensive:
                         {
-                            query = query.OrderByDescending(x => x.Price);
+                            query = query.OrderByDescending(x => x.GetMinPrice());
                             break;
                         }
 
@@ -72,6 +72,8 @@ namespace Persistance.Repositories
             return result;
 
         }
+
+
 
         public async Task<int> GetAllSimpleProductCount(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice)
         {
@@ -85,10 +87,11 @@ namespace Persistance.Repositories
                 query = query.Where(x => x.Category.Id == categoryId);
 
             if (minPrice != null)
-                query = query.Where(x => x.Price >= minPrice);
+                query = query.Where(x => x.AnyBiggerPrice(minPrice.Value));
+
 
             if (maxPrice != null)
-                query = query.Where(x => x.Price <= maxPrice);
+                query = query.Where(x => x.AnySmallerPrice(maxPrice.Value));
 
             var result = await query.CountAsync();
             return result;
@@ -100,14 +103,31 @@ namespace Persistance.Repositories
             var result = await _context.Products
                 .Include(x => x.Category)
                 .Include(x => x.Articles)
-                .Include(x => x.Pictures)
+                .Include(x => x.Images)
                 .Include(x => x.Features)
                 .SingleOrDefaultAsync(x => x.Id == id);
 
             return result;
         }
 
-       
+        public async Task Add(Product product)
+        {
+            await _context.Products.AddAsync(product);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<string>> GetBrands(string? filter)
+        {
+            var query = _context.Products.AsQueryable().Select(x => x.Brand).Distinct();
+
+            if (filter != null)
+                query = query.Where(x => x.Contains(filter));
+
+            var result =await query.ToListAsync();
+            return result;
+        }
+
+
     }
 
 }

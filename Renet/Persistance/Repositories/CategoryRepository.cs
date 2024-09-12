@@ -34,8 +34,15 @@ namespace Persistance.Repositories
 
         public async Task<bool> IsExist(string name)
         {
-           var result =await _context.Categories.AnyAsync(c => c.Name == name);
+            var result = await _context.Categories.AnyAsync(c => c.Name == name);
             return result;
+        }
+
+        public async Task<Category> GetById(Guid id)
+        {
+            var result = await _context.Categories.SingleOrDefaultAsync(x => x.Id == id);
+            return result;
+
         }
     }
 }

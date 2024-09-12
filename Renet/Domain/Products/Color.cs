@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Domain.Products
 {
-    public class Feature
+    public class Color
     {
-        public Feature(string name  , string value)
+        public Color(string name , string hexCode)
         {
             Id = Guid.NewGuid();
             Name = name;
-            Value = value;
+            HexCode = hexCode;
         }
         public Guid Id { get;private set; }
-        public string Name { get;private set; }
-        public string Value { get;private set; }
+        public string  Name { get;private set; }
+        public string HexCode { get;private set; }
     }
 }
+

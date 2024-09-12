@@ -8,6 +8,7 @@ namespace Application.Dtos
 {
     public class ProductDto
     {
+        //todo : تغییر ساختار دی تی او با  توجه به jk,u lpw,g 
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string EnglishName { get; set; }

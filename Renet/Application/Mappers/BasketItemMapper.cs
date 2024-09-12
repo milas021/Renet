@@ -15,7 +15,7 @@ namespace Application.Mappers
                 Count = item.Count,
                 ProductId = item.ProductId,
                 Name = product.Name,
-                Price = product.Price,
+                //Price = product.Price,
                 
             };
             return dto;

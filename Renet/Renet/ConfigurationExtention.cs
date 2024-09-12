@@ -46,6 +46,7 @@ namespace Renet
             builder.Services.AddScoped<IUserRepository , UserRepository>();
             builder.Services.AddScoped<IBasketRepository , BasketRepository>();
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
+            builder.Services.AddScoped<IColorRepository, ColorRepository>();
         }
 
         private static void ConfigureSettings(this WebApplicationBuilder builder)
