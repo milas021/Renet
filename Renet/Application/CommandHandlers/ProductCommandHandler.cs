@@ -1,6 +1,7 @@
 ﻿using Application.CommandResponse;
 using Application.Commands.ProductCommands;
 using Application.IRepositories;
+using Domain.Common;
 using Domain.Products;
 using Infrastructure;
 using Infrastructure.Exceptions;
@@ -15,6 +16,7 @@ namespace Application.CommandHandlers
     public class ProductCommandHandler :
         ICommandHandler<AddCategoryCommand, MessageResponse>
         , ICommandHandler<AddProductCommand, MessageResponse>
+        , ICommandHandler<EditCategoryCommand, MessageResponse>
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
@@ -29,15 +31,10 @@ namespace Application.CommandHandlers
 
         public async Task<MessageResponse> Handle(AddCategoryCommand command)
         {
-            if (string.IsNullOrEmpty(command.Name))
-                throw new AppException(ErrorMessage.InvalidCategoryName);
+           
 
             if (_categoryRepository.IsExist(command.Name).Result)
                 throw new AppException(ErrorMessage.DuplicateCategoryName);
-
-            if (string.IsNullOrEmpty(command.Image) || string.IsNullOrEmpty(command.Icon))
-                throw new AppException(ErrorMessage.InvalidCategoryIconOrImage);
-
 
             var category = new Category(command.Name, command.Icon, command.Image);
             await _categoryRepository.Add(category);
@@ -95,6 +92,17 @@ namespace Application.CommandHandlers
             };
 
             await _productRepository.Add(product);
+
+            return MessageResponse.CreateSuccesMessage();
+        }
+
+        public async Task<MessageResponse> Handle(EditCategoryCommand command)
+        {
+            var category = await _categoryRepository.GetById(command.Id);
+
+            category.Update(command.Name, command.Icon, command.Image);
+
+            await _categoryRepository.Save();
 
             return MessageResponse.CreateSuccesMessage();
         }

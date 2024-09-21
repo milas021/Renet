@@ -42,9 +42,6 @@ namespace Persistance.Repositories
                 return true;
         }
 
-        public async Task Save()
-        {
-           await _context.SaveChangesAsync();
-        }
+       
     }
 }

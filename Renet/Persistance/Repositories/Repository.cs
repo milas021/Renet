@@ -15,6 +15,11 @@ namespace Persistance.Repositories
         {
             _context = context;
         }
+
+        public async Task Save()
+        {
+           await _context.SaveChangesAsync();
+        }
        
     }
 }

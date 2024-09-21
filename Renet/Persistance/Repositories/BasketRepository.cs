@@ -16,10 +16,7 @@ namespace Persistance.Repositories
         public BasketRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
+       
         public async Task Add(Basket basket)
         {
             await _context.Baskets.AddAsync(basket);

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Application.IRepositories
 {
-    public interface IColorRepository
+    public interface IColorRepository : IRepository
     {
         Task<Color> GetById(Guid id);
     }

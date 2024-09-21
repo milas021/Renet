@@ -15,10 +15,7 @@ namespace Persistance.Repositories
         public CategoryRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
+        
         public async Task<IEnumerable<Category>> GetAll()
         {
             var result = await _context.Categories.ToListAsync();
@@ -29,7 +26,7 @@ namespace Persistance.Repositories
         public async Task Add(Category category)
         {
             await _context.Categories.AddAsync(category);
-            await _context.SaveChangesAsync();
+           
         }
 
         public async Task<bool> IsExist(string name)

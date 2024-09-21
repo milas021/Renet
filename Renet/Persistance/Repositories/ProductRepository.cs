@@ -19,10 +19,7 @@ namespace Persistance.Repositories
         public ProductRepository(AppDbContext context) : base(context)
         {
         }
-        public async Task Save()
-        {
-            await _context.SaveChangesAsync();
-        }
+        
         public async Task<IEnumerable<Product>> GetAllSimpleProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<string> brands, SortType? sort, int page, int pageSize)
         {
             //todo : test this method
@@ -113,7 +110,7 @@ namespace Persistance.Repositories
         public async Task Add(Product product)
         {
             await _context.Products.AddAsync(product);
-            await _context.SaveChangesAsync();
+          
         }
 
         public async Task<IEnumerable<string>> GetBrands(string? filter)

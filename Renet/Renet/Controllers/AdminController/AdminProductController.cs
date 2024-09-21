@@ -26,6 +26,13 @@ namespace Renet.Controllers.AdminController
             return Ok(result);
 
         }
+
+        [HttpPut("category")]
+        public async Task<IActionResult> EditCategory(EditCategoryCommand command)
+        {
+            var result = await _productCommandHandler.Handle(command);
+            return Ok(result);
+        }
         [HttpPost("product")]
         public async Task<IActionResult> AddProduct (AddProductCommand command)
         {

@@ -1,4 +1,5 @@
 ﻿using Application.CommandResponse;
+using Domain.Common;
 using Infrastructure;
 using Infrastructure.Exceptions;
 using Microsoft.AspNetCore.Builder;

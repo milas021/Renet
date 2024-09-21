@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Infrastructure
+namespace Domain.Common
 {
     public class ErrorMessage
     {
@@ -14,6 +14,4 @@ namespace Infrastructure
         public static readonly string UnkonwError = "خطایی در سامانه رخ داد";
         public static readonly string InvalidCategoryIconOrImage = "تصاویر دسته بندی نا معتبر است";
     }
-
-
 }

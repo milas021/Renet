@@ -16,6 +16,9 @@ namespace Application.Mappers
             {
                 Id = category.Id,
                 Name = category.Name,
+                Icon = category.Icon,
+                Image = category.Image, 
+                
             };
 
             return dto;
