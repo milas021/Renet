@@ -21,9 +21,27 @@ namespace Persistance.Repositories
             await _context.AddAsync(user);
         }
 
+        public async Task<IEnumerable<User>> GetAllUser(int page, int pageSize)
+        {
+            var skip = (page - 1) * pageSize;
+            var result = await _context.Users
+                 .Where(x => x.Role == UserRole.Customer)
+                 .Skip(skip)
+                 .Take(pageSize)
+                 .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<int> GetAllUserCount()
+        {
+           var count = await _context.Users.Where(x=>x.Role == UserRole.Customer).CountAsync();
+            return count;
+        }
+
         public async Task<User> GetById(Guid id)
         {
-            var user = await _context.Users.SingleOrDefaultAsync(x=>x.Id == id);
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Id == id);
             return user;
         }
 
@@ -35,13 +53,13 @@ namespace Persistance.Repositories
 
         public async Task<bool> IsUserExist(string userName)
         {
-           var result = await _context.Users.SingleOrDefaultAsync(x=>x.UserName == userName);
+            var result = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userName);
             if (result == null)
                 return false;
             else
                 return true;
         }
 
-       
+
     }
 }

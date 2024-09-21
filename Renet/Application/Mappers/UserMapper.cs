@@ -1,4 +1,5 @@
 ﻿using Application.Dtos;
+using Application.Dtos.Users;
 using Domain.Users;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,41 @@ namespace Application.Mappers
             };
 
             return dto;
+        }
+
+        public static BasicUserDto ToBasicDto(this User user)
+        {
+            var dto = new BasicUserDto()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Mobile = user.Mobile,
+                Province = user.Province.ToString(),
+            };
+
+            return dto;
+        }
+
+        public static FullUserDto ToFullDto(this User user)
+        {
+            var dto = new FullUserDto()
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Mobile = user.Mobile,
+                Address = user.Address,
+                City = user.City,
+                PostalCode = user.PostalCode,
+                Email = user.Email,
+                Province = user?.Province.ToString(),
+                UserName = user.UserName,
+
+            };
+
+            return dto;
+
         }
     }
 }
