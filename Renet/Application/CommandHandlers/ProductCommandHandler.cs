@@ -38,6 +38,7 @@ namespace Application.CommandHandlers
 
             var category = new Category(command.Name, command.Icon, command.Image);
             await _categoryRepository.Add(category);
+            await _categoryRepository.Save();
 
             return MessageResponse.CreateSuccesMessage();
 
