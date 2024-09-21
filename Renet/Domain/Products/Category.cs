@@ -10,6 +10,7 @@ namespace Domain.Products
 {
     public class Category
     {
+        private Category() { }
         public Category(string name, string icon, string image)
         {
             if (string.IsNullOrEmpty(name))
