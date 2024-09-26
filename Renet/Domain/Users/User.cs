@@ -34,7 +34,7 @@ namespace Domain.Users
     }
     public enum UserRole
     {
-        Admin,
-        Customer
+        Admin = 1,
+        Customer = 2
     }
 }
