@@ -1,16 +1,11 @@
-﻿using Domain.Baskets;
+﻿using Domain.Carts;
 using Domain.Coupons;
+using Domain.Orders;
 using Domain.Payments;
 using Domain.Products;
 using Domain.Tokens;
 using Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Persistance.Context
 {
@@ -31,8 +26,10 @@ namespace Persistance.Context
 
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Coupon> Coupons { get; set; }
-        public DbSet<Basket> Baskets { get; set; }
-        public DbSet<BasketItem> BasketItems { get; set; }
+        public DbSet<Cart> Carts { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
 
         public DbSet<Token> Tokens { get; set; }
 

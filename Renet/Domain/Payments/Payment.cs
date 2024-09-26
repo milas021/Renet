@@ -8,10 +8,22 @@ namespace Domain.Payments
 {
     public class Payment
     {
-        public Guid Id { get; set; }
-        public double Amount { get; set; }
-        public string TraceCode { get; set; }
-        public Guid UserId { get; set; }
+        public Guid Id { get;private set; }
+        public Guid OrderId { get;private set; } 
+        public DateTime PaymentDate { get;private set; }
+        public decimal Amount { get;private set; }
+        public PaymentMethod PaymentMethod { get;private set; }
+        public PaymentStatus PaymentStatus { get;private set; }
+
+    }
+
+    public enum PaymentMethod
+    {
+
+    }
+
+    public enum PaymentStatus
+    {
 
     }
 }

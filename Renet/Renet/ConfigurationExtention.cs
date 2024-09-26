@@ -45,7 +45,6 @@ namespace Renet
             builder.Services.AddScoped<IProductRepository ,ProductRepository>();
             builder.Services.AddScoped<ICategoryRepository , CategoryRepository>();
             builder.Services.AddScoped<IUserRepository , UserRepository>();
-            builder.Services.AddScoped<IBasketRepository , BasketRepository>();
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
             builder.Services.AddScoped<IColorRepository, ColorRepository>();
         }
