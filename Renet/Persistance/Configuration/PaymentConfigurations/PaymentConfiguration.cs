@@ -15,6 +15,8 @@ namespace Persistance.Configuration.PaymentConfigurations
         {
             builder.HasKey(x => x.Id);
             builder.Property(x=>x.Id).ValueGeneratedNever();
+
+            
         }
     }
 }

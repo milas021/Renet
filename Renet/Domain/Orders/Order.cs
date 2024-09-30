@@ -14,7 +14,7 @@ namespace Domain.Orders
         public DateTime OrderDate { get; private set; }
         public decimal TotalPrice { get; private set; }
         public IEnumerable<OrderItem> OrderItems { get; private set; }
-        public Guid? PaymentId { get; private set; } 
+      
         public Payment Payment { get; private set; }
         public OrderStatus Status { get; private set; }
     }
