@@ -1,4 +1,5 @@
-﻿using Application.Dtos.Orders;
+﻿using Application.Dtos;
+using Application.Dtos.Orders;
 using Application.IRepositories;
 using Application.Mappers;
 using Application.Mappers.Orders;
@@ -11,11 +12,15 @@ namespace Application.QueryServices {
             _orderRepository = orderRepository;
         }
 
-        public async Task<IEnumerable<BasicOrderDto>> GetAllOrder(int page, int pageSize) {
+        public async Task<PaginationDto< BasicOrderDto>> GetAllOrder(int page, int pageSize) {
             var order = await _orderRepository.GetAll(page, pageSize);
 
             var dto = order.Select(x => x.ToBasicDto()).ToList();
-            return dto;
+            var result = new PaginationDto<BasicOrderDto>() {
+                Results = dto,
+                TotalRecord = await _orderRepository.GetAllOrderCount()
+            };
+            return result;
 
         }
 

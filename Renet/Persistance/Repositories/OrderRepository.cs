@@ -18,6 +18,11 @@ namespace Persistance.Repositories {
             return order;
         }
 
+        public async Task<int> GetAllOrderCount() {
+            var result = await _context.Orders.CountAsync();
+            return result;
+        }
+
         public async Task<Order> GetById(Guid id) {
             var order = await _context.Orders
                  .Include(x => x.User)

@@ -10,5 +10,6 @@ namespace Application.IRepositories {
     public interface IOrderRepository {
         Task<IEnumerable<Order>> GetAll(int page, int pageSize);
         Task<Order> GetById(Guid id);
+        Task<int> GetAllOrderCount();
     }
 }
