@@ -53,6 +53,18 @@ namespace Renet.Controllers.AdminController
             var result = await _productQueryService.GetBrands(filter);
             return Ok(result);
         }
+
+        [HttpPost("color")]
+        public async Task<IActionResult> AddColor(AddColorCommand command) {
+            var result = await _productCommandHandler.Handle(command);
+            return Ok(result);
+        }
+
+        [HttpGet("color")]
+        public async Task<IActionResult> GetAllColors(int page, int pageSize) {
+            var result = await _productQueryService.GetAllColor(page, pageSize);
+            return Ok(result);
+        }
     }
 
   

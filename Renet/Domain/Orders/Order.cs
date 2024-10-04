@@ -1,4 +1,5 @@
 ﻿using Domain.Payments;
+using Domain.Users;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,8 @@ namespace Domain.Orders
     public class Order
     {
         public Guid Id { get; private set; }
-        public Guid UserId { get; private set; }
+        public int Number { get;private set; }
+        public User User { get; private set; }
         public DateTime OrderDate { get; private set; }
         public decimal TotalPrice { get; private set; }
         public IEnumerable<OrderItem> OrderItems { get; private set; }
@@ -21,6 +23,10 @@ namespace Domain.Orders
 
     public enum OrderStatus
     {
+        Processing = 1 ,
+        Preparing = 2 ,
+        Shipped =3 ,
+        Delivered = 4
 
     }
 }

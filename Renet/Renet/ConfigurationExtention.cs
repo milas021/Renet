@@ -39,6 +39,7 @@ namespace Renet
             builder.Services.AddScoped<ProductQueryService>();
             builder.Services.AddScoped<BasketQueryService>();
             builder.Services.AddScoped<UserQueryService>();
+            builder.Services.AddScoped<OrderQueryService>();
         }
         private static void ConfigureRepositories(this WebApplicationBuilder builder) 
         {
@@ -47,6 +48,7 @@ namespace Renet
             builder.Services.AddScoped<IUserRepository , UserRepository>();
             builder.Services.AddScoped<ITokenRepository, TokenRepository>();
             builder.Services.AddScoped<IColorRepository, ColorRepository>();
+            builder.Services.AddScoped<IOrderRepository, OrderRepository>();
         }
 
         private static void ConfigureSettings(this WebApplicationBuilder builder)

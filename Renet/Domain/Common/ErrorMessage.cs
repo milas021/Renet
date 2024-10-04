@@ -13,5 +13,6 @@ namespace Domain.Common
         public static readonly string DuplicateCategoryName = "نام دسته بندی تکراری است";
         public static readonly string UnkonwError = "خطایی در سامانه رخ داد";
         public static readonly string InvalidCategoryIconOrImage = "تصاویر دسته بندی نا معتبر است";
+        public static readonly string DuplicatedColorName = "نام رنگ نمیتواند تکراری باشد .";
     }
 }

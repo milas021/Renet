@@ -16,9 +16,9 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order> {
         builder.HasKey(x => x.Id);
         builder.Property(x=>x.Id).ValueGeneratedNever();
 
-        builder.HasOne<User>()
-            .WithMany()
-            .HasForeignKey(x => x.UserId);
+        builder.HasOne(x => x.User)
+            .WithMany();
+            //.HasForeignKey(x => x.UserId);
 
         builder.HasMany(x => x.OrderItems)
             .WithOne(x => x.Order);

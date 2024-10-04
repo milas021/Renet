@@ -17,7 +17,7 @@ namespace Application.CommandHandlers
         ICommandHandler<AddCategoryCommand, MessageResponse>
         , ICommandHandler<AddProductCommand, MessageResponse>
         , ICommandHandler<EditCategoryCommand, MessageResponse>
-    {
+         , ICommandHandler<AddColorCommand, MessageResponse> {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IColorRepository _colorRepository;
@@ -93,6 +93,7 @@ namespace Application.CommandHandlers
             };
 
             await _productRepository.Add(product);
+            await _productRepository.Save();
 
             return MessageResponse.CreateSuccesMessage();
         }
@@ -106,6 +107,18 @@ namespace Application.CommandHandlers
             await _categoryRepository.Save();
 
             return MessageResponse.CreateSuccesMessage();
+        }
+
+        public async Task<MessageResponse> Handle(AddColorCommand command) {
+            var color = new Color(command.Name, command.HexCode);
+
+            if (await _colorRepository.AnyColor(command.Name))
+                throw new AppException(ErrorMessage.DuplicatedColorName);
+
+            await _colorRepository.AddColor(color);
+            await _colorRepository.Save();
+            return MessageResponse.CreateSuccesMessage();
+
         }
     }
 }

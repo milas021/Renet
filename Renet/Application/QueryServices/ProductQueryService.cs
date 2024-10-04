@@ -1,6 +1,8 @@
 ﻿using Application.Dtos;
+using Application.Dtos.Products;
 using Application.IRepositories;
 using Application.Mappers;
+using Application.Mappers.Products;
 using Domain.Products;
 using Infrastructure;
 using System;
@@ -15,11 +17,13 @@ namespace Application.QueryServices
     {
         private readonly IProductRepository _productRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IColorRepository _colorRepository;
 
-        public ProductQueryService(IProductRepository productRepository, ICategoryRepository categoryRepository)
-        {
+
+        public ProductQueryService(IProductRepository productRepository, ICategoryRepository categoryRepository, IColorRepository colorRepository) {
             _productRepository = productRepository;
             _categoryRepository = categoryRepository;
+            _colorRepository = colorRepository;
         }
 
         public async Task<PaginationDto<SimpleProductDto>> GetAllProduct(string name, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<string> brands , SortType? sort , int page, int pageSize)
@@ -53,6 +57,12 @@ namespace Application.QueryServices
             var result = await _productRepository.GetBrands(filter);
             return result;
             
+        }
+
+        public async Task<IEnumerable<ColorDto>> GetAllColor(int page, int pageSize) {
+            var result = await _colorRepository.GetColors(page, pageSize);
+            var dto = result.Select(x => x.ToDto());
+            return dto;
         }
 
     }
