@@ -1,6 +1,7 @@
 ﻿using Application.Dtos;
 using Application.Dtos.Users;
 using Domain.Users;
+using Infrastructure.Extentions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,7 +33,7 @@ namespace Application.Mappers
                 FirstName = user.FirstName,
                 LastName = user.LastName,
                 Mobile = user.Mobile,
-                Province = user.Province.ToString(),
+                Province = user.Province.GetDescription(),
             };
 
             return dto;
@@ -50,7 +51,7 @@ namespace Application.Mappers
                 City = user.City,
                 PostalCode = user.PostalCode,
                 Email = user.Email,
-                Province = user?.Province.ToString(),
+                Province = user?.Province.GetDescription(),
                 UserName = user.UserName,
 
             };

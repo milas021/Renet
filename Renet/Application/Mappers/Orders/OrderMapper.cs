@@ -1,5 +1,6 @@
 ﻿using Application.Dtos.Orders;
 using Domain.Orders;
+using Infrastructure.Extentions;
 
 namespace Application.Mappers.Orders;
 public static class OrderMapper {
@@ -7,7 +8,7 @@ public static class OrderMapper {
     public static BasicOrderDto ToBasicDto(this Order order) {
         var basicOrderDto = new BasicOrderDto() {
             CustomerName = order.User.FirstName + " " + order.User.LastName,
-            CustomerProvince = order.User.Province.ToString(),
+            CustomerProvince = order.User.Province.GetDescription(),
             Id = order.Id,
             Number = order.Number,
             OrderDate = order.OrderDate.ToString()
