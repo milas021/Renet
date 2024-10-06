@@ -1,5 +1,6 @@
 ﻿using Application.IRepositories;
 using Domain.Orders;
+using Domain.Orders.OrderSates;
 using Microsoft.EntityFrameworkCore;
 using Persistance.Context;
 
@@ -35,6 +36,11 @@ namespace Persistance.Repositories {
 
                  .SingleOrDefaultAsync(x => x.Id == id);
             return order;
+        }
+
+        public async Task<List<Order>>GetAllRejectedOrders() {
+            var orders = await _context.Orders.Where(x=>x.LastState is RejectedOrderSate).ToListAsync();
+            return orders;
         }
     }
 }
