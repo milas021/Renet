@@ -5,17 +5,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Domain.Orders.OrderSates {
-    public class PreparingOrderState : OrderStateBase {
-        public override OrderStateBase Reject(User actor) {
+namespace Domain.Orders.OrderSates; 
+public class PreparingOrderState : OrderStateBase {
+    public override OrderStateBase Reject(User actor) {
 
-            //do bussiness logic ,domain event and ...
-            return new RejectedOrderSate();
-        }
+        //do bussiness logic ,domain event and ...
+        return new RejectedOrderSate();
+    }
 
-        public override OrderStateBase SendToPost(User actor) {
+    public override OrderStateBase SendToPost(User actor) {
 
-            return new ShippedOrderSate();
-        }
+        return new ShippedOrderSate();
     }
 }

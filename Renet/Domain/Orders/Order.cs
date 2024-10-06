@@ -24,7 +24,7 @@ namespace Domain.Orders {
         public void Confirm(User actor) {
             //send sms if totalPrize > 100,000,00
             if (DateTime.Now.Hour > 8 && DateTime.Now.Hour < 17) {
-                LastState.Confirm(actor);
+                States.Add(LastState.Confirm(actor));
 
             }
         }
