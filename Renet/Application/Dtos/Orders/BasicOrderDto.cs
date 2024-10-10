@@ -11,5 +11,6 @@ namespace Application.Dtos.Orders {
         public string CustomerName { get; set; }
         public string CustomerProvince { get; set; }
         public string OrderDate { get; set; }
+        public string OrderTime { get; set; }
     }
 }

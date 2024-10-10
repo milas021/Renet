@@ -21,5 +21,6 @@ namespace Domain.Products
         public Guid Id { get;private set; }
         public string Name { get;private set; }
         public bool IsMainPicture { get;private set; }
+        public Guid ProductId { get; set; }
     }
 }

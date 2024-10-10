@@ -11,7 +11,8 @@ public static class OrderMapper {
             CustomerProvince = order.User.Province.GetDescription(),
             Id = order.Id,
             Number = order.Number,
-            OrderDate = order.OrderDate.ToPersianDate()
+            OrderDate = order.OrderDate.ToPersianDate(),
+            OrderTime = order.OrderDate.ToTime()
         };
 
         return basicOrderDto;
@@ -26,6 +27,7 @@ public static class OrderMapper {
         dto.TotalPrice = order.TotalPrice;
         dto.User = order.User.ToBasicDto();
         dto.OrderItems = order.OrderItems.Select(x => x.ToDto());
+        dto.OrderTime = order.OrderDate.ToTime();
 
         return dto;
     }

@@ -11,4 +11,12 @@ namespace Application.Dtos.Products {
         public string Color { get; set; }
         public decimal Price { get; set; }
     }
+
+    public class VariantDto {
+        public Guid Id { get; set; }
+       
+        public string Color { get; set; }
+        public decimal Price { get; set; }
+        public int Stock { get; set; }
+    }
 }

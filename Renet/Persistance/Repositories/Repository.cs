@@ -1,4 +1,5 @@
-﻿using Persistance.Context;
+﻿using Application.IRepositories;
+using Persistance.Context;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Persistance.Repositories
 {
-    public class Repository
+    public class Repository : IRepository
     {
         protected readonly AppDbContext _context;
 

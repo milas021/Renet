@@ -1,25 +1,19 @@
 ﻿using Application.Dtos;
+using Application.Dtos.Products;
 using Domain.Products;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Application.Mappers.Products
-{
+namespace Application.Mappers.Products {
     public static class ProductMapper
     {
-        public static SimpleProductDto ToSimpleDto(this Product product)
+        public static SimpleProductAdminDto ToSimpleDto(this Product product)
         {
-            var x = product.Images.Count();
-            var dto = new SimpleProductDto()
+            var dto = new SimpleProductAdminDto()
             {
-
                 Id = product.Id,
                 Name = product.Name,
-                Price = product.GetMinPrice(),
-                Picture = product.Images == null || product.Images.Count() == 0 ? null : product.Images.Where(x => x.IsMainPicture).FirstOrDefault().Name,
+                Image = product.Images == null || product.Images.Count() == 0 ? null : product.Images.Where(x => x.IsMainPicture).FirstOrDefault().Name,
+                Category = product.Category.Name  ,
+                Brand = product.Brand,
             };
             return dto;
         }
@@ -30,15 +24,12 @@ namespace Application.Mappers.Products
             {
                 Id = product.Id,
                 Name = product.Name,
-                //Price = product.Price,
                 Description = product.Description,
                 EnglishName = product.EnglishName,
                 Guaranty = product.Guaranty,
+                Category = product.Category.Name ,
+                MainImage = product.Images == null || product.Images.Count() == 0 ? null : product.Images.Where(x=> x.IsMainPicture).SingleOrDefault().Name ,
 
-                Articles = product.Articles.Select(x => x.ToDto()).ToList(),
-                Category = product.Category.ToDto(),
-                Features = product.Features.Select(x => x.ToDto()).ToList(),
-                PictureDtos = product.Images.Select(x => x.ToDto()).ToList()
             };
             return dto;
         }

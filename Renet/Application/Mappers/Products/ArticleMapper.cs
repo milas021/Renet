@@ -6,13 +6,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.Mappers
+namespace Application.Mappers.Products
 {
     public static class ArticleMapper
     {
         public static ArticleDto ToDto(this Article article)
         {
-            var dto  = new ArticleDto()
+            var dto = new ArticleDto()
             {
                 Id = article.Id,
                 Text = article.Text,

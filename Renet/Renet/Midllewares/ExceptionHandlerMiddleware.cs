@@ -1,14 +1,9 @@
 ﻿using Application.CommandResponse;
 using Domain.Common;
-using Infrastructure;
 using Infrastructure.Exceptions;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-using System.Threading.Tasks;
 
-namespace Renet.Midllewares
-{
+namespace Renet.Midllewares {
     // You may need to install the Microsoft.AspNetCore.Http.Abstractions package into your project
     public class ExceptionHandlerMiddleware
     {

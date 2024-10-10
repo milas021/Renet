@@ -18,5 +18,6 @@ namespace Domain.Products
         public Guid Id { get;private set; }
         public string Title { get;private set; }
         public string Text { get;private set; }
+        public Guid ProductId { get; set; }
     }
 }
