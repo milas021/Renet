@@ -5,6 +5,9 @@ using Domain.Common;
 using Domain.Products;
 using Infrastructure;
 using Infrastructure.Exceptions;
+using Infrastructure.Settings;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,16 +20,20 @@ namespace Application.CommandHandlers
         ICommandHandler<AddCategoryCommand, MessageResponse>
         , ICommandHandler<AddProductCommand, MessageResponse>
         , ICommandHandler<EditCategoryCommand, MessageResponse>
-         , ICommandHandler<AddColorCommand, MessageResponse> {
+         , ICommandHandler<AddColorCommand, MessageResponse>
+        , ICommandHandler<AddCategoryWithFileCommand, MessageResponse> {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IProductRepository _productRepository;
         private readonly IColorRepository _colorRepository;
 
-        public ProductCommandHandler(ICategoryRepository categoryRepository, IProductRepository productRepository, IColorRepository colorRepository)
+        private readonly DirectorySettings directorySettings;
+
+        public ProductCommandHandler(ICategoryRepository categoryRepository, IProductRepository productRepository, IColorRepository colorRepository ,IOptions<DirectorySettings> directory )
         {
             _categoryRepository = categoryRepository;
             _productRepository = productRepository;
             _colorRepository = colorRepository;
+            directorySettings = directory.Value;
         }
 
         public async Task<MessageResponse> Handle(AddCategoryCommand command)
@@ -118,6 +125,43 @@ namespace Application.CommandHandlers
             await _colorRepository.AddColor(color);
             await _colorRepository.Save();
             return MessageResponse.CreateSuccesMessage();
+
+        }
+
+        public async Task<MessageResponse> Handle(AddCategoryWithFileCommand command) {
+            //throw new NotImplementedException();
+
+            if (command.Image.Length > 0) {
+                var filePath = Path.Combine(directorySettings.BaseImageDirectory,
+                    Path.GetRandomFileName());
+
+                using (var stream = System.IO.File.Create(filePath)) {
+                    await command.Image.CopyToAsync(stream);
+                }
+            }
+
+            if (command.Icon.Length > 0) {
+                var filePath = Path.Combine(directorySettings.BaseImageDirectory,
+                    Path.GetRandomFileName());
+
+                using (var stream = System.IO.File.Create(filePath)) {
+                    await command.Icon.CopyToAsync(stream);
+                    
+                }
+            }
+
+
+
+
+            if (_categoryRepository.IsExist(command.Name).Result)
+                throw new AppException(ErrorMessage.DuplicateCategoryName);
+
+            var category = new Category(command.Name, command.Icon.FileName, command.Image.FileName);
+            await _categoryRepository.Add(category);
+            await _categoryRepository.Save();
+
+            return MessageResponse.CreateSuccesMessage();
+
 
         }
     }

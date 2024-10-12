@@ -3,6 +3,11 @@ using Application.Commands.ProductCommands;
 using Application.QueryServices;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.IO;
+using System.Net;
+using System.Net.Http.Headers;
+using System.Text;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Renet.Controllers.AdminController {
     [Route("api/[controller]")]
@@ -15,11 +20,75 @@ namespace Renet.Controllers.AdminController {
             _productCommandHandler = productCommandHandler;
             _productQueryService = productQueryService;
         }
+
+        [HttpGet("Test")]
+        public async Task<IActionResult> Test() {
+            var path = "D:\\Milad\\ImageDirectory\\test.jpg";
+            var path2 = "D:\\Milad\\ImageDirectory\\image.jfif";
+            using (FileStream file = new FileStream(path, FileMode.Open, System.IO.FileAccess.Read)) {
+               var memoryStream = new MemoryStream();
+                await file.CopyToAsync(memoryStream);
+
+                //var dto = new {
+                //    //Image = new FormFile(memoryStream, 0, memoryStream.Length, "name", )
+                //};
+
+                ////var ff = new FormFile(memoryStream, 0, memoryStream.Length, "name" ,"filenmae");
+                //return File(memoryStream , "application/octet-stream");
+
+                ////////////////////////////
+
+                //var result = new HttpResponseMessage(HttpStatusCode.OK) {
+                //    Content = new ByteArrayContent(memoryStream.ToArray())
+                //};
+                //result.Content.Headers.ContentDisposition =
+                //    new System.Net.Http.Headers.ContentDispositionHeaderValue("attachment") {
+                //        FileName = "CertificationCard.pdf"
+                //    };
+                //result.Content.Headers.ContentType =
+                //    new MediaTypeHeaderValue("application/octet-stream");
+
+                //return result;
+
+                /////////////////////////
+
+                //it work
+                Byte[] b1 = System.IO.File.ReadAllBytes(path);   // You can use your own method over here.         
+                Byte[] b2 = System.IO.File.ReadAllBytes(path2);   // You can use your own method over here.         
+              
+
+                //var path2 = "D:\\Milad\\ImageDirectory\\image.jfif";
+                //Byte[] imageBytes = System.IO.File.ReadAllBytes(path2);
+
+                var dto = new {
+                    Icon = b1 ,
+                    Image = b2
+                };
+
+                return Ok(dto);
+
+                ///////////
+                ///it work
+                //return PhysicalFile(path, "image/jpeg");
+
+               
+
+            }
+
+           
+        }
         [HttpPost("category")]
         public async Task<IActionResult> AddCategory(AddCategoryCommand command) {
 
             var result = await _productCommandHandler.Handle(command);
             return Ok(result);
+
+        }
+
+        [HttpPost("category/new")]
+        public async Task <IActionResult> AddCategory(AddCategoryWithFileCommand command) {
+            var resut = await _productCommandHandler.Handle(command);
+            return Ok(resut);
 
         }
 

@@ -58,6 +58,7 @@ namespace Renet
         private static void ConfigureSettings(this WebApplicationBuilder builder)
         {
             builder.Services.Configure<AccessTokenSettings>(builder.Configuration.GetSection(nameof(AccessTokenSettings)));
+            builder.Services.Configure<DirectorySettings>(builder.Configuration.GetSection(nameof(DirectorySettings)));
         }
 
 
