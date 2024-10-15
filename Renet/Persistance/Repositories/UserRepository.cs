@@ -10,8 +10,7 @@ using System.Threading.Tasks;
 
 namespace Persistance.Repositories
 {
-    public class UserRepository : Repository, IUserRepository
-    {
+    public class UserRepository : Repository, IUserRepository {
         public UserRepository(AppDbContext context) : base(context)
         {
         }
@@ -45,6 +44,11 @@ namespace Persistance.Repositories
             return user;
         }
 
+        public async Task<User> GetByMobile(string mobile) {
+            var user = await _context.Users.SingleOrDefaultAsync(x => x.Mobile == mobile);
+            return user;
+        }
+
         public async Task<User> GetByUserName(string userName)
         {
             var result = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userName);
@@ -53,13 +57,13 @@ namespace Persistance.Repositories
 
         public async Task<bool> IsUserExist(string userName)
         {
-            var result = await _context.Users.SingleOrDefaultAsync(x => x.UserName == userName);
-            if (result == null)
-                return false;
-            else
-                return true;
+            var result = await _context.Users.AnyAsync(x => x.UserName == userName);
+            return result;
         }
 
-
+        public async Task<bool> IsUserExistByMobile(string mobile) {
+            var result = await _context.Users.AnyAsync(x => x.Mobile == mobile);
+            return result;
+        }
     }
 }

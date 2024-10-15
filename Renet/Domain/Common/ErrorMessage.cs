@@ -14,5 +14,7 @@ namespace Domain.Common
         public static readonly string UnkonwError = "خطایی در سامانه رخ داد";
         public static readonly string InvalidCategoryIconOrImage = "تصاویر دسته بندی نا معتبر است";
         public static readonly string DuplicatedColorName = "نام رنگ نمیتواند تکراری باشد .";
+        public static readonly string UserExist = "کاربر وجود دارد";
+        public static readonly string UserNotExist = "کاربر وجود ندارد";
     }
 }

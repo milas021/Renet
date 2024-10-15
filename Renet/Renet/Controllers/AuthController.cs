@@ -20,7 +20,7 @@ namespace Renet.Controllers
             _authCommandHandler = authService;
         }
 
-
+        [Obsolete("Use SignUp")]
         [HttpPost(nameof(Registration))]
         public async Task<IActionResult> Registration(RegistrationCommand command)
         {
@@ -31,6 +31,22 @@ namespace Renet.Controllers
         }
 
         [HttpPost(nameof(Login))]
+        public async Task<IActionResult> Login(SendOTPCommand command) {
+            var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
+            var result = await _authCommandHandler.SignUp(command, userAgent);  
+           
+            return Ok(result);
+        }
+
+        [HttpPost(nameof(VerifyOtp))]
+        public async Task<IActionResult> VerifyOtp(VerifyOTPCommand command) {
+            var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
+            var result = await _authCommandHandler.VerifyOtp(command, userAgent);
+            return Ok(result);
+
+        }
+
+        [HttpPost("LoginWithPassword")]
         public async Task<IActionResult> Login(LoginCommand command)
         {
             var userAgent = Utilities.GetUserAgentData(this.Request.Headers["User-Agent"]);
