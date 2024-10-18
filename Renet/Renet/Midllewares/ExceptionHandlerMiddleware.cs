@@ -34,7 +34,8 @@ namespace Renet.Midllewares {
             catch (Exception e)
             {
                 
-                await httpContext.Response.WriteAsync(JsonSerializer.Serialize(MessageResponse.CreateErrorMessage(ErrorMessage.UnkonwError),options));
+                //await httpContext.Response.WriteAsync(JsonSerializer.Serialize(MessageResponse.CreateErrorMessage(ErrorMessage.UnkonwError),options));
+                await httpContext.Response.WriteAsync(JsonSerializer.Serialize(MessageResponse.CreateErrorDeveloperMessage(e.Message , e.StackTrace),options));
 
             }
         }

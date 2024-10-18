@@ -8,9 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Persistance.Configuration.ProductConfigurations;
-public class ArticleConfiguration : IEntityTypeConfiguration<Article> {
-    public void Configure(EntityTypeBuilder<Article> builder) {
-       builder.HasKey(x=>x.Id);
-        builder.Property(x=>x.Id).ValueGeneratedNever();
+public class ProductImageConfiguration : IEntityTypeConfiguration<ProductImage> {
+    public void Configure(EntityTypeBuilder<ProductImage> builder) {
+        builder.HasKey(x => x.Id);
+        builder.Property(x => x.Id).ValueGeneratedNever();
     }
 }

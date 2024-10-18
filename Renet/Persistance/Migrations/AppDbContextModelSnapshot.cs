@@ -36,7 +36,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Carts.CartItem", b =>
@@ -64,7 +64,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("CartId");
 
-                    b.ToTable("CartItems");
+                    b.ToTable("CartItems", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Coupons.Coupon", b =>
@@ -85,7 +85,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Coupons");
+                    b.ToTable("Coupons", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Orders.Order", b =>
@@ -113,7 +113,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Orders");
+                    b.ToTable("Orders", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Orders.OrderItem", b =>
@@ -143,7 +143,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("VariantId");
 
-                    b.ToTable("OrderItems");
+                    b.ToTable("OrderItems", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Orders.OrderSates.OrderStateBase", b =>
@@ -166,7 +166,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderStates");
+                    b.ToTable("OrderStates", (string)null);
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("OrderStateBase");
                 });
@@ -197,7 +197,7 @@ namespace Persistance.Migrations
                     b.HasIndex("OrderId")
                         .IsUnique();
 
-                    b.ToTable("Payments");
+                    b.ToTable("Payments", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Article", b =>
@@ -221,7 +221,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Articles");
+                    b.ToTable("Articles", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Category", b =>
@@ -244,7 +244,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Color", b =>
@@ -263,7 +263,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Colors");
+                    b.ToTable("Colors", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Feature", b =>
@@ -287,7 +287,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Features");
+                    b.ToTable("Features", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.Product", b =>
@@ -323,7 +323,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("CategoryId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductImage", b =>
@@ -346,7 +346,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductPictures");
+                    b.ToTable("ProductPictures", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Products.ProductVariant", b =>
@@ -373,7 +373,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("Variants");
+                    b.ToTable("Variants", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Tokens.Token", b =>
@@ -405,7 +405,7 @@ namespace Persistance.Migrations
 
                     b.HasIndex("UserAgentId");
 
-                    b.ToTable("Tokens");
+                    b.ToTable("Tokens", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Tokens.UserAgent", b =>
@@ -424,7 +424,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("UserAgent");
+                    b.ToTable("UserAgent", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Users.User", b =>
@@ -471,7 +471,7 @@ namespace Persistance.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Users");
+                    b.ToTable("Users", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Orders.OrderSates.PreparingOrderState", b =>
