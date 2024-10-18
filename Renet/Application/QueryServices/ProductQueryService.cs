@@ -3,6 +3,7 @@ using Application.Dtos.Products;
 using Application.IRepositories;
 using Application.Mappers;
 using Application.Mappers.Products;
+using Infrastructure;
 
 namespace Application.QueryServices {
     public class ProductQueryService {
@@ -32,9 +33,21 @@ namespace Application.QueryServices {
             var dtos = products.Select(x => x.ToSimpleDto());
             var result = new PaginationDto<SimpleProductAdminDto>() {
                 Results = dtos,
-                TotalRecord = await _productRepository.GetProductCount(search, categoryId)
+                TotalRecord = await _productRepository.GetProductCount(search, categoryId, Guid.Empty, null, null, null)
             };
             return result;
+        }
+        public async Task<PaginationDto<SimpleProductCustomerDto>> GetAllProduct(string? search, Guid categoryId, decimal? minPrice, decimal? maxPrice, List<string> brands, Guid colorId, SortType? sort, int page, int pageSize) {
+
+            var products = await _productRepository.GetProductIncludedImageCategoryColorVariant(search, categoryId, minPrice, maxPrice, brands, colorId, sort, page, pageSize);
+            var dtos = products.Select(x => x.ToSimpleCustomerDto());
+            var total = await _productRepository.GetProductCount(search, categoryId, colorId, minPrice, maxPrice, brands);
+            var result = new PaginationDto<SimpleProductCustomerDto> {
+                Results = dtos,
+                TotalRecord = total
+            };
+            return result;
+
         }
 
         public async Task<ProductDto> GetProductById(Guid id) {
@@ -43,11 +56,7 @@ namespace Application.QueryServices {
             return dto;
         }
 
-        public async Task<ProductDto> GetProduct(Guid productId) {
-            var result = await _productRepository.GetById(productId);
-            var dto = result.ToDto();
-            return dto;
-        }
+      
 
         public async Task<IEnumerable<ArticleDto>> GetArticleByProductId(Guid productId) {
             var result = await _articleRepository.GetByProductId(productId);
@@ -63,7 +72,7 @@ namespace Application.QueryServices {
 
         public async Task<IEnumerable<VariantDto>> GetVariantsByProductId(Guid productId) {
             var result = await _variantRepository.GetVariantsByProductId(productId);
-            var dto = result.Select(x=>x.ToVariantDto()).ToList();
+            var dto = result.Select(x => x.ToDto()).ToList();
             return dto;
         }
 
@@ -75,9 +84,9 @@ namespace Application.QueryServices {
 
         public async Task<IEnumerable<ProductPictureDto>> GetImagesByProductId(Guid productId) {
             var result = await _imageRepository.GetImagedByProductId(productId);
-            var dto = result.Select(x=>x.ToDto());
+            var dto = result.Select(x => x.ToDto());
             return dto;
-          
+
         }
 
         public async Task<IEnumerable<string>> GetBrands(string? filter) {

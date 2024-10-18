@@ -7,5 +7,5 @@ using System.Threading.Tasks;
 
 namespace Application.IRepositories;
 public interface IVariantRepository :IRepository {
-    Task<IEnumerable<ProductVariant>> GetVariantsByProductId(Guid productId);
+    Task<IEnumerable<Variant>> GetVariantsByProductId(Guid productId);
 }

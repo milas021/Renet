@@ -4,9 +4,9 @@ using Application.IRepositories;
 using Application.Mappers;
 using Application.Services;
 using Domain.Common;
+using Domain.Exceptions;
 using Domain.Tokens;
 using Domain.Users;
-using Infrastructure.Exceptions;
 using Infrastructure.Extentions;
 
 namespace Application.CommandHandlers {

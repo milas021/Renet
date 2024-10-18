@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Domain.Products
 {
-    public class ProductVariant
+    public class Variant
     {
-        public ProductVariant(decimal price , int stock)
+        public Variant(decimal price , int stock)
         {
             Id = Guid.NewGuid();
             Price = price;

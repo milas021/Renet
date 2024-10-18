@@ -1,6 +1,6 @@
 ﻿using Application.CommandResponse;
 using Domain.Common;
-using Infrastructure.Exceptions;
+using Domain.Exceptions;
 using System.Text.Json;
 
 namespace Renet.Midllewares {

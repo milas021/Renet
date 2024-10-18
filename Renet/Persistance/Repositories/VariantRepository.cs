@@ -13,7 +13,7 @@ public class VariantRepository : Repository, IVariantRepository {
     public VariantRepository(AppDbContext context) : base(context) {
     }
 
-    public async Task<IEnumerable<ProductVariant>> GetVariantsByProductId(Guid productId) {
+    public async Task<IEnumerable<Variant>> GetVariantsByProductId(Guid productId) {
         var result = await _context.Variants
             .Include(x=>x.Color)
             .Where(x=>x.Product.Id == productId)

@@ -17,6 +17,8 @@ public static class EnumExtensions {
 
     
     public static string GetDescription(this Province? value) {
+        if (value == null)
+            return "نا مشخص";
         var attribute = value.GetAttribute<DescriptionAttribute>();
         return attribute == null ? value.ToString() : attribute.Description;
     }

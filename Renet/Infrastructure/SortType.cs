@@ -8,10 +8,7 @@ namespace Infrastructure
 {
     public enum SortType
     {
-        Cheapest ,
-        Expensive ,
-        
-
-
+        Cheapest = 0  ,
+        Expensive = 1 ,
     }
 }

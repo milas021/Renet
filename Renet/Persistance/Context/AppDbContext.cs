@@ -20,7 +20,7 @@ namespace Persistance.Context {
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductPictures { get; set; }
         public DbSet<Color> Colors { get; set; }
-        public DbSet<ProductVariant> Variants { get; set; }
+        public DbSet<Variant> Variants { get; set; }
 
         public DbSet<Payment> Payments { get; set; }
         public DbSet<Coupon> Coupons { get; set; }

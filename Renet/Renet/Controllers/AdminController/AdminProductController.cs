@@ -124,33 +124,12 @@ namespace Renet.Controllers.AdminController {
             return Ok(result);
         }
 
-        [HttpGet("Peoduct/Article/{productId}")]
-        public async Task<IActionResult> GetArticleByProductId(Guid productId) {
-
-            var result = await _productQueryService.GetArticleByProductId(productId);
+        [HttpPut("Product")]
+        public async Task<IActionResult> EditProduct(EditeProductCommand command) {
+            var result = await _productCommandHandler.Handle(command);
             return Ok(result);
+
         }
-
-        [HttpGet("Product/Feature/{productId}")]
-        public async Task<IActionResult>  GetFeaturesbyProductId(Guid productId) {
-
-            var result = await _productQueryService.GetFeatureByProductId(productId);
-            return Ok(result);
-        }
-
-        [HttpGet("Product/Variant/{productId}")]
-        public async Task<IActionResult> GetVariantsByProductId(Guid productId) {
-
-            var result = await _productQueryService.GetVariantsByProductId(productId);
-                return Ok(result);
-        }
-
-        [HttpGet("Product/Image/{productId}")]
-        public async Task< IActionResult> GetImagesByProductId(Guid productId) {
-            var result = await _productQueryService.GetImagesByProductId(productId);
-            return Ok(result);
-        }
-
 
         [HttpGet("product/brand")]
         public async Task<IActionResult> GetBrands(string? filter) {

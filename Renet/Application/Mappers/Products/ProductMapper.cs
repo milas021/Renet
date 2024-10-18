@@ -11,7 +11,7 @@ namespace Application.Mappers.Products {
             {
                 Id = product.Id,
                 Name = product.Name,
-                Image = product.Images == null || product.Images.Count() == 0 ? null : product.Images.Where(x => x.IsMainPicture).FirstOrDefault().Name,
+                Image = product.GetMainImage(),
                 Category = product.Category.Name  ,
                 Brand = product.Brand,
             };
@@ -27,9 +27,26 @@ namespace Application.Mappers.Products {
                 Description = product.Description,
                 EnglishName = product.EnglishName,
                 Guaranty = product.Guaranty,
-                Category = product.Category.Name ,
-                MainImage = product.Images == null || product.Images.Count() == 0 ? null : product.Images.Where(x=> x.IsMainPicture).SingleOrDefault().Name ,
+                Category = product.Category.ToDto() ,
+                Varians = product.Variants.Select(x=>x.ToDto()).ToList(),
+                Articles = product.Articles.Select(x=>x.ToDto()) ,
+                Brand = product.Brand,
+                Features = product.Features.Select(x=>x.ToDto()),
+                Images = product.Images.Select(x => x.ToDto())
+                
+            };
+            return dto;
+        }
 
+        public static SimpleProductCustomerDto ToSimpleCustomerDto(this Product product) {
+            var dto = new SimpleProductCustomerDto() {
+                Category = product.Category.Name,
+                Name = product.Name,
+                Price = product.GetMinPrice(),
+                MainImage = product.GetMainImage(),
+                HexColor = product.GetHexColors(),
+                Brand = product.Brand,
+                Id = product.Id,
             };
             return dto;
         }

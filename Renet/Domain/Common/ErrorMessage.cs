@@ -16,5 +16,6 @@ namespace Domain.Common
         public static readonly string DuplicatedColorName = "نام رنگ نمیتواند تکراری باشد .";
         public static readonly string UserExist = "کاربر وجود دارد";
         public static readonly string UserNotExist = "کاربر وجود ندارد";
+        public static readonly string InvalidProductName = "نام محصول نا معتبر است";
     }
 }
