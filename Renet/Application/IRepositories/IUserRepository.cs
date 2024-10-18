@@ -13,6 +13,7 @@ namespace Application.IRepositories
         Task<User> GetByUserName(string userName);
         Task<User> GetByMobile(string mobile);
         Task<bool> IsUserExist(string userName);
+        Task<bool> IsUserExist(Guid id);
         Task<bool> IsUserExistByMobile(string mobile);
         Task<IEnumerable<User>> GetAllUser(int page, int pageSize);
         Task<int> GetAllUserCount();

@@ -28,8 +28,8 @@ namespace Renet
         }
         private static void ConfigureCommandHandlers(this WebApplicationBuilder builder)
         {
-            builder.Services.AddScoped<BasketCommandHandler>();
             builder.Services.AddScoped<ProductCommandHandler>();
+            builder.Services.AddScoped<CartCommandHandler>();
         }
         private static void ConfigureServices(this WebApplicationBuilder builder)
         {
@@ -53,6 +53,7 @@ namespace Renet
             builder.Services.AddScoped<IFeatureRepository, FeatureRepository>();
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
             builder.Services.AddScoped<IVariantRepository, VariantRepository>();
+            builder.Services.AddScoped<ICartRepository, CartRepository>();
         }
 
         private static void ConfigureSettings(this WebApplicationBuilder builder)

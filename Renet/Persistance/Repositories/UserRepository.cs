@@ -61,6 +61,11 @@ namespace Persistance.Repositories
             return result;
         }
 
+        public async Task<bool> IsUserExist(Guid id) {
+           var result = await _context.Users.AnyAsync(x=>x.Id == id);
+            return result;
+        }
+
         public async Task<bool> IsUserExistByMobile(string mobile) {
             var result = await _context.Users.AnyAsync(x => x.Mobile == mobile);
             return result;

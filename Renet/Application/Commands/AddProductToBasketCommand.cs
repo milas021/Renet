@@ -11,8 +11,8 @@ namespace Application.Commands
     public  class AddProductToBasketCommand : CommandBase
     {
         public Guid UserId { get; set; }
-        public Guid ProductId { get; set; }
-        public int Count { get; set; }
+        public Guid VariantId { get; set; }
+       
 
     }
 }
