@@ -24,17 +24,17 @@ namespace Domain.Carts {
             return result;
         }
 
-        public void AddCartItem(Guid variant) {
+        //public void AddCartItem(Guid variant) {
 
-            var item = GetCartItemByVariantId(variant);
-            if (item == null) {
+        //    var item = GetCartItemByVariantId(variant);
+        //    if (item == null) {
 
-                item = new CartItem(variant);
-                CartItems.Add(item);
-            }
-            else {
-                item.AddQuantity();
-            }
-        }
+        //        item = new CartItem(variant);
+        //        CartItems.Add(item);
+        //    }
+        //    else {
+        //        item.AddQuantity();
+        //    }
+        //}
     }
 }

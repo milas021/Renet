@@ -17,5 +17,6 @@ namespace Domain.Common
         public static readonly string UserExist = "کاربر وجود دارد";
         public static readonly string UserNotExist = "کاربر وجود ندارد";
         public static readonly string InvalidProductName = "نام محصول نا معتبر است";
+        public static readonly string ProductOutOfStock = "محصول انتخاب‌شده در اندازه یا رنگ مورد نظر موجود نمی‌باشد.";
     }
 }

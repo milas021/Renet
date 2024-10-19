@@ -9,11 +9,11 @@ namespace Domain.Carts
     public class CartItem
     {
         private CartItem() { }
-        public CartItem(Guid variant )
+        public CartItem(Guid variant , Guid cartId )
         {
             Id = Guid.NewGuid();
             VariantId = variant;
-            Quantity = 1;
+            CartId = cartId;
         }
         public Guid Id { get; private set; }
         public Guid CartId { get; private set; } 
@@ -21,7 +21,7 @@ namespace Domain.Carts
         public Guid VariantId { get; private set; } 
         public int Quantity { get; private set; }
         public decimal Price { get; private set; }
-        public Cart Cart { get; private set; }
+        //public Cart Cart { get; private set; }
 
         public void AddQuantity() {
             Quantity++;

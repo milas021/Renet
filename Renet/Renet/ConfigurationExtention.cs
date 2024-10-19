@@ -54,6 +54,7 @@ namespace Renet
             builder.Services.AddScoped<IImageRepository, ImageRepository>();
             builder.Services.AddScoped<IVariantRepository, VariantRepository>();
             builder.Services.AddScoped<ICartRepository, CartRepository>();
+            builder.Services.AddScoped<ICartItemRepository, CartItemRepository>();
         }
 
         private static void ConfigureSettings(this WebApplicationBuilder builder)
